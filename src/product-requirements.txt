@@ -1,0 +1,2108 @@
+# OCTACLUB + THINK
+## وثيقة متطلبات المنتج وإعادة الهندسة والتوثيق التقني
+**Product Requirements Document (PRD) + Software Requirements Specification (SRS) + Re-engineering Plan**
+
+**الشركة:** OCTAGRAM  
+**المشروع:** OctaClub + THINK  
+**الإصدار:** 1.2 — Execution Baseline  
+**التاريخ:** 19 نوفمبر 2026  
+**بداية التنفيذ:** 1 ديسمبر 2026  
+**نهاية التنفيذ المستهدفة:** 28 فبراير 2027  
+**مدة المشروع:** 3 أشهر  
+**نوع المشروع:** Software Re-engineering, Modernization & Product Expansion  
+**النظام الأساسي:** Medical Club Platform  
+**الهدف:** إعادة هندسة النظام الموجود وتحويله إلى منصة OctaClub مستقلة ومتكاملة مع THINK  
+**حالة الوثيقة:** خط أساس تنفيذي معتمد؛ الحالة الفنية للمكونات تُحدد بالفحص  
+
+---
+
+# 1. الملخص التنفيذي — Executive Summary
+
+## 1.1 تعريف المشروع
+
+OctaClub + THINK مشروع تقني تابع لشركة OCTAGRAM يهدف إلى إعادة هندسة وتطوير النظام البرمجي الموجود سابقًا تحت اسم Medical Club، وتحويله إلى منصة تعليم جامعي شاملة ومستقلة وقابلة للتوسع، مع تطوير ودمج محرك ذكاء اصطناعي تعليمي باسم THINK.
+
+لا تبدأ عملية تطوير OctaClub من نظام فارغ، ولا تعتمد على إعادة كتابة جميع المكونات البرمجية السابقة.
+
+بدلًا من ذلك، يقوم المشروع على الاستفادة من المكونات الموجودة بعد فحصها وتوثيقها، وإعادة تصميم الأجزاء التي تحتاج إلى تعديل، وإزالة الوظائف المرتبطة بالنطاق القديم، وإضافة الوظائف الجديدة اللازمة لرؤية OctaClub.
+
+بناءً على الخبرة السابقة في تطوير Medical Club، توجد قاعدة برمجية تشمل عددًا كبيرًا من الوظائف التي يحتاج إليها المنتج الجديد، خصوصًا في مجالات الحسابات والإدارة الأكاديمية والصلاحيات والمحتوى والخدمات الأساسية.
+
+لكن وجود ميزة في المتطلبات السابقة لا يثبت أنها مكتملة في الكود الحالي. لذلك يجب التحقق من حالة كل مكون قبل اعتماده في خطة إعادة الاستخدام.
+
+**الهدف الأساسي ليس إعادة بناء ما تم إنجازه، بل تحويل العمل السابق إلى منتج أفضل وأكثر تنظيمًا، مع توثيق كامل للبنية والوظائف والبيانات والتكاملات.**
+
+## 1.2 استراتيجية المشروع
+
+تعتمد الاستراتيجية على أربعة محاور:
+
+### 1. System Recovery & Assessment
+
+استرجاع وفحص النسخة البرمجية الحالية وتحديد حالة مكوناتها.
+
+### 2. Software Re-engineering
+
+إعادة هيكلة وتحسين وإعادة تخصيص المكونات الحالية لتناسب OctaClub.
+
+### 3. Feature Expansion & THINK Integration
+
+تطوير الوظائف الجديدة ودمج محرك THINK وبيئة التعلم التفاعلية.
+
+### 4. Comprehensive Documentation
+
+إعداد توثيق هندسي وتشغيلي ووظيفي شامل لجميع مكونات النظام.
+
+## 1.3 النتيجة المطلوبة
+
+بحلول 28 فبراير 2027، يتوفر إصدار Full Product V1 من OctaClub + THINK، يتضمن الوظائف الأساسية المتكاملة، ويعمل على بيئة إنتاجية مستقلة، مع توثيق يتيح فهم النظام وصيانته وتطويره.
+
+لا يُعتبر المشروع منتهيًا إذا كانت الوظائف تعمل ولكن لا توجد مواصفات واضحة أو توثيق أو اختبارات مناسبة.
+
+---
+
+# 2. الرؤية — Product Vision
+
+## 2.1 OctaClub
+
+منصة تعليم جامعي توفر بيئة موحدة تجمع:
+
+- المحتوى الأكاديمي.
+- الجامعات والتخصصات والمواد.
+- المسارات التعليمية.
+- الاختبارات والتقييمات.
+- المكتبة الرقمية.
+- التعلم التقني التفاعلي.
+- مساعد الذكاء الاصطناعي THINK.
+- الخدمات والأنشطة الجامعية.
+- الفرص والإرشاد المهني.
+- الأدوات الشخصية للطلاب.
+- الخدمات التعليمية المؤسسية.
+
+## 2.2 THINK
+
+محرك تعليمي ذكي قادر على:
+
+- فهم السياق التعليمي.
+- شرح المفاهيم.
+- التوجيه بأسلوب Socratic.
+- تقديم الأمثلة.
+- إنشاء تدريبات.
+- تفسير الأخطاء.
+- دعم البرمجة.
+- الاستناد إلى المصادر.
+- المساعدة في تحديد نقاط الضعف.
+- اقتراح الخطوات التعليمية التالية.
+
+## 2.3 Tech Path
+
+جزء من OctaClub لتعليم البرمجة والهندسة البرمجية عبر:
+
+- مسارات منظمة.
+- محتوى تفاعلي.
+- محرر أكواد.
+- تنفيذ برمجي آمن.
+- تمارين وتحديات.
+- اختبارات.
+- مشاريع تطبيقية.
+- تكامل THINK.
+
+## 2.4 العلاقة بين المنتجات
+
+يتولى OctaClub إدارة المستخدم والمحتوى والتقدم والتقييمات والصلاحيات.
+
+يقدم Tech Path التجربة العملية للتعليم التقني ضمن OctaClub.
+
+يوفر THINK المساعدة الذكية من خلال سياق المحتوى والتقدم والنشاط الذي يُسمح له بالوصول إليه.
+
+يجب ألا تكون هذه الأنظمة الثلاثة منفصلة من ناحية تجربة المستخدم، حتى لو كانت بعض خدماتها مستقلة هندسيًا.
+
+---
+
+# 3. المبادئ الهندسية الحاكمة
+
+**ENG-001 — Reuse First**
+
+تتم مراجعة المكونات البرمجية الموجودة قبل اعتماد تطوير بديل.
+
+**ENG-002 — No Unnecessary Rewriting**
+
+يُمنع إعادة كتابة وظيفة مكتملة وآمنة وقابلة للصيانة لمجرد تغيير اسم المنتج أو تفضيل أسلوب برمجي مختلف.
+
+**ENG-003 — Evidence-Based Refactoring**
+
+يجب أن تستند إعادة الهيكلة إلى مشكلة فعلية أو متطلب جديد أو تحسين قابل للتبرير.
+
+**ENG-004 — Full Documentation**
+
+توثيق جميع الخدمات والوظائف والكيانات والتكاملات والقرارات المؤثرة إلزامي.
+
+**ENG-005 — Preserve Verified Behavior**
+
+عند إعادة هيكلة وظيفة، يجب الحفاظ على سلوكها الصحيح أو توثيق أي تغيير مقصود في ذلك السلوك.
+
+**ENG-006 — Product Independence**
+
+يجب أن يعمل OctaClub على مستودع وإعدادات وبيئات وبيانات وأسرار مستقلة، مع الاستفادة من كود MedClub المملوك لـOctagram.
+
+**ENG-007 — Security by Design**
+
+أي تعديل يجب ألا يؤدي إلى تراجع مستوى الحماية.
+
+**ENG-008 — Modular Architecture**
+
+تُحافظ المكونات على حدود واضحة تسمح بالتوسع والصيانة.
+
+**ENG-009 — Traceability**
+
+كل متطلب يجب ربطه بمكون برمجي أو API أو شاشة أو اختبار يثبت تنفيذه.
+
+**ENG-010 — Documentation as Deliverable**
+
+لا تعتبر الميزة منتهية قبل اكتمال توثيقها.
+
+---
+
+# 4. النظام الأساسي — Existing Medical Club System
+
+## 4.1 نقطة الانطلاق
+
+يُعتمد مشروع Medical Club السابق بوصفه المرجع التقني الأساسي لعملية إعادة الهندسة.
+
+تُفحص الشيفرة وقواعد البيانات والمكونات والوثائق الموجودة لتحديد مدى صلاحيتها للاستخدام في OctaClub.
+
+تشمل التقنيات التي سبق استخدامها في المشروع:
+
+- ASP.NET Core / .NET.
+- Entity Framework Core.
+- PostgreSQL.
+- REST APIs.
+- Authentication & Authorization.
+- Docker.
+- Object Storage.
+- Email Services.
+- Background Processing.
+- نظام إدارة أكاديمي.
+- خدمات المحتوى والمستخدمين والإدارة.
+
+يجب التحقق من الإصدارات والحالة الفعلية لهذه المكونات من المستودع والبيئة البرمجية، وليس اعتمادها بناءً على وصف سابق فقط.
+
+## 4.2 التمييز بين المواصفات والتنفيذ
+
+يجب فصل ثلاث حالات:
+
+**Specified:** الميزة موجودة في وثائق المتطلبات القديمة.
+
+**Implemented:** الميزة موجودة فعليًا في الكود.
+
+**Verified:** الميزة تعمل وتم اختبارها وفق السلوك المطلوب.
+
+لا تعني حالة Implemented بالضرورة أن الميزة صالحة للنقل أو النشر.
+
+## 4.3 ملكية الكود واستقلال بيئات المنتج
+
+كود Medical Club (MedClub) أصل برمجي مملوك لشركة Octagram ومعتمد لإعادة الاستخدام. لا توجد مراجعة ملكية معلقة ضمن البرنامج. يحدد الفحص الفني حالة المكونات وجودتها وقرارات الاحتفاظ بها أو تكييفها أو إعادة هندستها.
+
+لا تُنقل بيانات مستخدمي Medical Club، أو محتواه الخاص، أو أسراره، أو مفاتيح وصوله، أو معلوماته التشغيلية إلى OctaClub دون تصريح قانوني مناسب.
+
+يكون للمنتج الجديد مستودعه وإعداداته وقاعدة بياناته وأسراره وبيئاته المستقلة.
+
+---
+
+# 5. التدقيق الشامل للنظام القديم — As-Is System Audit
+
+**Workstream: RE-01**  
+**الأولوية: إلزامية قبل إعادة الهيكلة الواسعة**
+
+## 5.1 Source Code Audit
+
+يجب فحص:
+
+1. جميع المشاريع والحلول البرمجية.
+2. جميع وحدات Backend.
+3. جميع Controllers وEndpoints.
+4. جميع Services.
+5. جميع Repositories وData Access Components.
+6. جميع DTOs.
+7. جميع Validators.
+8. جميع Background Jobs.
+9. جميع Integrations.
+10. جميع Configuration Files.
+11. جميع Dependencies.
+12. جميع Automated Tests.
+13. جميع Database Migrations.
+14. جميع Error Handling Components.
+15. جميع Security Policies.
+
+## 5.2 API Inventory
+
+يجب استخراج قائمة فعلية بجميع Endpoints الموجودة.
+
+لكل Endpoint يُوثق:
+
+- HTTP Method.
+- Route.
+- Controller.
+- الغرض.
+- المستخدم أو الدور المستهدف.
+- Request Model.
+- Response Model.
+- Authentication Requirements.
+- Authorization Policy.
+- Validation Rules.
+- HTTP Status Codes.
+- Business Logic.
+- Database Dependencies.
+- Side Effects.
+- External Services.
+- Error Cases.
+- Existing Tests.
+- Technical Issues.
+- Re-engineering Decision.
+
+## 5.3 Database Audit
+
+يشمل الفحص:
+
+- الجداول.
+- الأعمدة.
+- أنواع البيانات.
+- المفاتيح الأساسية.
+- العلاقات.
+- القيود.
+- الفهارس.
+- Triggers.
+- Migrations.
+- Historical Data Dependencies.
+- Audit Fields.
+- Soft Delete Mechanisms.
+- Query Performance.
+- Data Integrity.
+
+## 5.4 Security Audit
+
+مراجعة:
+
+- Authentication.
+- Token Handling.
+- Authorization.
+- Role Boundaries.
+- IDOR.
+- Data Exposure.
+- File Uploads.
+- Injection Risks.
+- Sensitive Logging.
+- Secrets.
+- Rate Limiting.
+- Session Management.
+- Administrative Operations.
+
+## 5.5 Infrastructure Audit
+
+مراجعة:
+
+- Dockerfiles.
+- Docker Compose.
+- CI/CD Pipelines.
+- Environment Variables.
+- Secrets Management.
+- Reverse Proxy.
+- Storage.
+- Database Backup.
+- Monitoring.
+- Logging.
+- Deployment Procedures.
+
+## 5.6 Audit Deliverables
+
+يجب إنتاج:
+
+1. Existing System Inventory.
+2. Endpoint Inventory.
+3. Database Schema Report.
+4. Dependency Report.
+5. Security Findings.
+6. Technical Debt Register.
+7. Feature Status Matrix.
+8. Existing Architecture Diagram.
+9. Reuse Eligibility Report.
+10. Re-engineering Backlog.
+
+---
+
+# 6. تصنيف المكونات — Re-engineering Decision Matrix
+
+كل مكون موجود يُصنف ضمن قرار واحد رئيسي:
+
+| القرار | التعريف |
+|---|---|
+| RETAIN | الاحتفاظ بالمكون كما هو بعد اجتياز الفحص |
+| REFACTOR | تحسين البنية مع الحفاظ على السلوك المطلوب |
+| ADAPT | تعديل المكون ليتوافق مع متطلبات OctaClub |
+| REWRITE | إعادة تنفيذ المكون عند وجود مبرر هندسي واضح |
+| REMOVE | إزالة وظيفة لم تعد مطلوبة |
+| NEW | تطوير وظيفة غير موجودة |
+| BLOCKED | مكون لا يمكن اتخاذ قرار بشأنه قبل معالجة اعتماد أو مشكلة |
+
+## 6.1 نموذج سجل القرار
+
+لكل Module أو Endpoint:
+
+**Component ID:** RE-COMP-001  
+**Original Module:** Authentication  
+**Current Status:** Pending Verification  
+**Target Module:** OctaClub Identity  
+**Decision:** Pending Audit  
+**Reason:** يُحدد بعد الفحص  
+**Required Changes:** تُوثق بالتفصيل  
+**Owner:** يحدد  
+**Dependencies:** تُحدد  
+**Tests:** تُحدد  
+**Documentation:** Required  
+**Approval:** Pending
+
+## 6.2 شروط الاحتفاظ بالمكون
+
+يمكن الاحتفاظ بالمكون إذا:
+
+- يندرج ضمن قاعدة MedClub المملوكة أو الاعتماديات الخارجية المعتمدة.
+- يحقق المتطلبات الجديدة.
+- لا يحتوي على ثغرات معروفة مانعة.
+- يعمل بصورة موثوقة.
+- لا يسبب ارتباطًا غير مطلوب بالنظام السابق.
+- لا يفرض تكلفة صيانة غير مبررة.
+- يمكن توثيقه واختباره.
+
+## 6.3 شروط إعادة الكتابة
+
+لا تتم إعادة الكتابة إلا عند وجود سبب مثل:
+
+- خلل معماري يؤثر على الاستقرار.
+- مشكلة أمنية تتطلب تغييرًا جذريًا.
+- عدم إمكانية تعديل المكون بصورة معقولة.
+- اعتماديات غير قابلة للصيانة.
+- اختلاف جوهري بين منطق النظام القديم والجديد.
+- تكلفة إصلاح أعلى بصورة مبررة من إعادة التنفيذ.
+
+---
+
+# 7. تحويل Medical Club إلى OctaClub
+
+**Workstream: RE-02**
+
+## 7.1 إعادة الهوية — Rebranding
+
+يجب مراجعة جميع المواضع المرتبطة بالاسم القديم:
+
+- Application Name.
+- Project Names.
+- Namespaces.
+- Domain Names.
+- URLs.
+- Environment Variables.
+- Configuration Keys.
+- Email Templates.
+- Notification Templates.
+- UI Labels.
+- Logos.
+- Static Assets.
+- Database Seed Data.
+- Documentation.
+- API Descriptions.
+- Automated Tests.
+- Deployment Configurations.
+
+لا يجوز تنفيذ إعادة التسمية بصورة جماعية غير مدروسة تؤدي إلى كسر العقود أو Migration History.
+
+## 7.2 إزالة الارتباط بالنادي الطبي
+
+يجب تحديد وإزالة أو تعميم:
+
+- الأسماء الخاصة بالنادي.
+- المناصب التنظيمية الخاصة به.
+- صلاحياته الإدارية المحددة.
+- الأكواد الثابتة لجامعة واحدة.
+- المحتوى الخاص بالعميل.
+- القوالب والرسائل الخاصة به.
+- سياسات لا تناسب المنتج الجديد.
+- أي اعتماد على خوادم أو خدمات أو حسابات العميل.
+
+## 7.3 Generalization
+
+تحويل المكونات المقيدة إلى مكونات قابلة لإعادة الاستخدام.
+
+أمثلة:
+
+**Medical Club Academic Catalog → Multi-University Academic Catalog**
+
+**Club-Specific Roles → Platform & Organization Roles**
+
+**MedClub Resource Pages → General Educational Content Management**
+
+**Medical Student Profile → General Student Academic Profile**
+
+**Medical Club Team → University Clubs & Organizations**
+
+كل عملية تعميم يجب أن تحافظ على وضوح حدود البيانات والصلاحيات.
+
+## 7.4 Legacy Cleanup
+
+يجب إزالة:
+
+- Dead Code.
+- Obsolete Endpoints.
+- Unused Dependencies.
+- Old Configuration.
+- Unused Feature Flags.
+- Deprecated Integrations.
+- Unused Scheduled Jobs.
+- Duplicate Business Logic.
+- Unused Database Objects عند التأكد من سلامة إزالتها.
+
+تُنفذ الإزالة مع اختبارات مناسبة وسجل تغييرات وإجراءات تراجع عند الحاجة.
+
+---
+
+# 8. متطلبات المنتج — Functional Scope
+
+## 8.1 تصنيف الأولويات
+
+**P0:** إلزامي لإطلاق Full Product V1.
+
+**P1:** توسعة قريبة، تدخل في إصدار فبراير فقط بعد اعتمادها رسميًا.
+
+**P2:** جزء من الرؤية الكاملة ولا يُعتبر التزامًا تلقائيًا للإصدار الأول.
+
+## 8.2 مصفوفة الوحدات
+
+| الوحدة | القرار الأولي | الأولوية |
+|---|---|---|
+| Authentication | تدقيق وإعادة استخدام أو تكييف | P0 |
+| User Management | تدقيق وتعميم | P0 |
+| Academic Catalog | تعميم وإعادة هندسة | P0 |
+| Roles & Permissions | إعادة تصميم النطاقات مع مراجعة الموجود | P0 |
+| Content Management | تدقيق وتطوير الموجود | P0 |
+| Learning Paths | إعادة استخدام ما يناسب وإكمال الفجوات | P0 |
+| Student Dashboard | تطوير وربط الوظائف | P0 |
+| Assessments | تدقيق الموجود وإكمال المطلوب | P0 |
+| Resource Library | تكييف وتطوير | P0 |
+| Search | تحسين الموجود أو استكماله | P0 |
+| THINK | تطوير وتكامل | P0 |
+| Tech Path | تطوير وتكامل | P0 |
+| Code Runner | تطوير خدمة معزولة | P0 |
+| Notifications | إعادة استخدام وتعميم | P0 |
+| Administration | إعادة هندسة الموجود | P0 |
+| Analytics & Audit | مراجعة وتطوير | P0 |
+| University Clubs | تعميم أو توسعة | P1 |
+| Events & Certificates | تكييف أو إضافة | P1 |
+| Opportunities | توسعة | P1 |
+| Mentorship | توسعة | P1 |
+| Billing & Subscriptions | إضافة تجارية | P1 |
+| Marketplace | توسعة لاحقة | P2 |
+| Advanced Cloud IDE | توسعة لاحقة | P2 |
+| Mobile Applications | توسعة لاحقة | P2 |
+
+**ملاحظة:** القرارات المذكورة اتجاهات عمل مبدئية. لا تُعتبر حالة تنفيذ أي وحدة مؤكدة حتى اكتمال الـ Audit.
+
+---
+
+# 9. Identity & Authentication
+
+**Module: OC-AUTH — P0**
+
+## 9.1 المتطلبات
+
+- تسجيل المستخدم بالبريد الإلكتروني.
+- التحقق من البريد.
+- تسجيل الدخول.
+- إدارة الجلسات.
+- استعادة كلمة المرور.
+- تغيير كلمة المرور.
+- تعديل الملف الشخصي.
+- تسجيل الخروج.
+- حذف الحساب وفق السياسة.
+- حماية الحسابات الإدارية.
+- تسجيل العمليات الأمنية المهمة.
+
+## 9.2 استراتيجية إعادة الهندسة
+
+يجب البدء بمراجعة Authentication الموجود بدل تطوير نظام جديد.
+
+تشمل المراجعة:
+
+1. التحقق من سلامة Tokens.
+2. مراجعة Refresh Token Rotation.
+3. مراجعة إدارة انتهاء الجلسات.
+4. إزالة سياسات العميل القديم غير المناسبة.
+5. مراجعة OTP Providers.
+6. التحقق من صلاحيات الوصول.
+7. إعادة تصميم الأدوار العامة للمنصة.
+8. تحديث الرسائل والقوالب.
+9. إضافة الاختبارات الناقصة.
+10. توثيق جميع السيناريوهات.
+
+## 9.3 معايير القبول
+
+- لا يسمح بالوصول غير المصرح به.
+- لا توجد حسابات أو صلاحيات قديمة غير مقصودة.
+- تعمل رحلات الحساب الأساسية.
+- تعمل سياسات إبطال الجلسات.
+- جميع Endpoint Contracts موثقة.
+- اجتياز الاختبارات الأمنية المعتمدة.
+
+---
+
+# 10. Academic Catalog
+
+**Module: OC-ACA — P0**
+
+## 10.1 المتطلبات
+
+يجب أن يدعم النظام:
+
+- Universities.
+- Faculties.
+- Departments.
+- Academic Programs.
+- Academic Years.
+- Academic Terms.
+- Courses.
+- Course Offerings.
+- Prerequisites.
+- Academic Resources.
+
+## 10.2 إعادة هندسة النظام الموجود
+
+يُراجع Academic Catalog الموجود، ثم يُعمّم ليدعم أكثر من جامعة وتخصص.
+
+يجب إزالة أي اعتماد غير ضروري على:
+
+- أسماء دفعات معينة.
+- تخصص طبي واحد.
+- سنوات أكاديمية ثابتة.
+- هيكل دراسي خاص بمؤسسة واحدة.
+- Academic Catalog مرتبط بجهة واحدة فقط.
+
+## 10.3 سلامة البيانات
+
+- الحفاظ على معرفات مستقرة.
+- عدم تكرار المواد دون مبرر.
+- إدارة اختلاف الخطط بين الجامعات.
+- دعم أرشفة الخطط القديمة.
+- ضمان اتساق روابط الدروس والاختبارات.
+- الحفاظ على تاريخ تقدم المستخدم عند تغيير المحتوى.
+
+## 10.4 معايير القبول
+
+تستطيع الإدارة إنشاء جامعة وبرنامج ومادة وربط المحتوى بها دون تعديل مصدر التطبيق.
+
+---
+
+# 11. Content Management System
+
+**Module: OC-CMS — P0**
+
+## 11.1 المتطلبات
+
+- إنشاء صفحات.
+- إنشاء دروس.
+- إنشاء أقسام.
+- Content Blocks.
+- إدارة الملفات.
+- رفع الصور والفيديو والـ PDF.
+- Content Drafts.
+- Review Workflow.
+- Publishing.
+- Archiving.
+- Versioning.
+- Content Permissions.
+
+## 11.2 إعادة الهندسة
+
+مراجعة مكونات CMS الموجودة وتحديد:
+
+- ما إذا كان المحتوى ديناميكيًا بالكامل.
+- دعم Versioning.
+- دعم Draft/Published.
+- سلامة عمليات الحذف.
+- صلاحيات النشر.
+- قدرات ترتيب العناصر.
+- سلامة File Upload.
+- إمكانية إعادة استخدام المورد في أكثر من درس.
+- التعامل مع الروابط المعطلة.
+- حقوق المحتوى.
+
+## 11.3 مراحل المحتوى
+
+Draft → In Review → Approved → Published → Archived
+
+## 11.4 متطلبات البيانات
+
+كل مورد يحتوي على:
+
+- العنوان.
+- الوصف.
+- النوع.
+- اللغة.
+- المصدر.
+- حقوق الاستخدام.
+- المالك.
+- المراجع.
+- حالة النشر.
+- تاريخ آخر مراجعة.
+- الإصدار.
+
+## 11.5 التكامل مع THINK
+
+يجب أن تسمح بنية المحتوى بفهرسة المواد المسموح بها وإعادة فهرستها بعد التعديل أو الحذف.
+
+لا يُستخدم محتوى غير معتمد كمصدر رسمي للإجابات التعليمية.
+
+---
+
+# 12. Learning Management System
+
+**Module: OC-LMS — P0**
+
+## 12.1 الهيكل
+
+Learning Path → Module → Lesson → Activity → Assessment
+
+## 12.2 المتطلبات
+
+- إنشاء مسارات تعليمية.
+- تقسيمها إلى وحدات.
+- ترتيب الدروس.
+- تحديد Prerequisites.
+- تسجيل الطالب.
+- حفظ التقدم.
+- استكمال آخر درس.
+- إدارة حالة الدروس.
+- ربط الاختبارات.
+- ربط THINK.
+- عرض الإنجازات.
+- الإبلاغ عن محتوى خاطئ.
+
+## 12.3 إعادة استخدام الموجود
+
+يجب البحث عن المكونات السابقة المرتبطة بالمواد، والتقدم، والمحتوى، والتقييمات.
+
+يُعاد استخدامها وفق احتياجات LMS بدل إنشاء بيانات أو منطق مكرر.
+
+## 12.4 Progress Tracking
+
+لا يُحتسب فتح الدرس وحده إتقانًا للمفهوم.
+
+يجب التفريق بين:
+
+- Viewed.
+- Started.
+- Activity Completed.
+- Assessment Passed.
+- Learning Objective Mastered.
+
+## 12.5 معايير القبول
+
+يستطيع الطالب التسجيل في مسار، قراءة درس، حل نشاط، إكمال اختبار، ثم العودة لاحقًا ومتابعة تقدمه بصورة صحيحة.
+
+---
+
+# 13. Assessment & Examination System
+
+**Module: OC-EXM — P0**
+
+## 13.1 المتطلبات
+
+- Question Banks.
+- Multiple Choice.
+- True / False.
+- Multiple Selection.
+- Programming Challenges.
+- Assessment Attempts.
+- Results.
+- Feedback.
+- Question Difficulty.
+- Topic Mapping.
+- Attempt History.
+
+## 13.2 قواعد التقييم
+
+- تخزين الإجابات بصورة آمنة.
+- احتساب نتائج الأسئلة الموضوعية في Backend.
+- عدم الوثوق بدرجات يرسلها المستخدم.
+- منع التلاعب بالمحاولات.
+- دعم انتهاء الوقت عند الحاجة.
+- حفظ النتائج التاريخية.
+- إدارة تغييرات إصدار السؤال.
+- عدم كشف الإجابات المخفية قبل السماح بذلك.
+
+## 13.3 تكامل THINK
+
+يساعد THINK في:
+
+- تفسير الأخطاء.
+- شرح المفاهيم.
+- إعداد تدريبات إضافية.
+- تقديم تلميحات مناسبة.
+
+لا يجوز أن يغير THINK نتيجة اختبار رسمي أو يكشف محتوى مقيدًا.
+
+---
+
+# 14. Student Dashboard
+
+**Module: OC-STUDENT — P0**
+
+## 14.1 الوظائف
+
+- Student Profile.
+- My Courses.
+- My Learning Paths.
+- Continue Learning.
+- Recent Activities.
+- Quiz Results.
+- Progress Overview.
+- My Library.
+- Saved Resources.
+- THINK Shortcut.
+- Notifications.
+
+## 14.2 إعادة الهندسة
+
+تتم مراجعة الخدمات الموجودة المرتبطة بحساب الطالب والمحتوى والتقدم، ثم تُنشأ طبقة عرض موحدة للبيانات.
+
+يجب منع بناء خدمات مكررة للحصول على بيانات موجودة أصلًا عبر API معتمدة.
+
+## 14.3 جودة البيانات
+
+يجب أن تستند الإحصائيات إلى عمليات حقيقية، وليس إلى نسب تقدم افتراضية.
+
+---
+
+# 15. Search & Digital Library
+
+**Module: OC-SEARCH — P0**
+
+## المتطلبات
+
+- البحث عن المواد.
+- البحث عن الدروس.
+- البحث عن المسارات.
+- البحث عن الملفات.
+- تصفية النتائج حسب التخصص والجامعة.
+- البحث بالعربية والإنجليزية.
+- حفظ الموارد.
+- الوصول السريع إلى الملفات الحديثة.
+- احترام الصلاحيات.
+
+## إعادة الهندسة
+
+تُراجع قدرات البحث الحالية.
+
+يُفضل استخدام PostgreSQL Full-Text Search كبداية إذا حقق الاحتياجات، مع إمكانية الاستفادة من pgvector للبحث الدلالي.
+
+لا تُضاف خدمة بحث مستقلة دون ضرورة هندسية.
+
+---
+
+# 16. Tech Path
+
+**Module: OC-TECH — P0**
+
+## 16.1 التعريف
+
+بيئة لتعليم البرمجة والهندسة البرمجية داخل OctaClub.
+
+## 16.2 الوظائف
+
+- Learning Paths.
+- Programming Lessons.
+- Code Examples.
+- Interactive Exercises.
+- Code Editor.
+- Code Execution.
+- Automated Test Cases.
+- Progress Tracking.
+- THINK Assistance.
+
+## 16.3 المسار الأول
+
+يُقترح إطلاق مسار Backend Foundations كاملًا، يتضمن 10–15 وحدة تعليمية.
+
+## 16.4 Code Editor
+
+المتطلبات:
+
+- Syntax Highlighting.
+- Line Numbers.
+- Auto Indentation.
+- Code Formatting عند توفره.
+- Error Display.
+- Code Persistence.
+- Reset to Starter Code.
+- Language Selection ضمن اللغات المعتمدة.
+
+## 16.5 Code Runner
+
+يُنشأ كمكون منفصل عن الـ Core Backend.
+
+المتطلبات الأمنية:
+
+- Isolated Execution.
+- Restricted Permissions.
+- CPU Limits.
+- Memory Limits.
+- Execution Timeout.
+- Network Restrictions.
+- Temporary Filesystem.
+- No Production Secrets.
+- No Direct Database Access.
+- Job Cancellation.
+- Abuse Monitoring.
+
+يُختبر العزل قبل السماح للمستخدمين بتشغيل أكوادهم.
+
+## 16.6 Advanced Cloud IDE
+
+توسعة مستقبلية تشمل:
+
+- Multi-file Projects.
+- Terminal.
+- Git Integration.
+- Dependency Management.
+- Persistent Workspaces.
+- Advanced Debugging.
+
+---
+
+# 17. THINK — Intelligent Learning Engine
+
+**Module: THINK-AI — P0**
+
+## 17.1 الهدف
+
+إنشاء محرك تعلم ذكي متكامل مع النظام الأكاديمي والمسارات والمحتوى والاختبارات وTech Path.
+
+## 17.2 الوظائف الأساسية
+
+**THINK-001:** محادثة تعليمية.
+
+**THINK-002:** شرح المفاهيم.
+
+**THINK-003:** تبسيط الموضوعات.
+
+**THINK-004:** شرح بمستويات مختلفة.
+
+**THINK-005:** أمثلة تطبيقية.
+
+**THINK-006:** Socratic Guidance.
+
+**THINK-007:** أسئلة تدريبية.
+
+**THINK-008:** مراجعة إجابات الطالب.
+
+**THINK-009:** تفسير الأخطاء البرمجية.
+
+**THINK-010:** تقديم تلميحات للكود.
+
+**THINK-011:** ربط الإجابات بالمصادر.
+
+**THINK-012:** فهم سياق الدرس.
+
+**THINK-013:** حفظ المحادثات حسب السياسة.
+
+**THINK-014:** Feedback & Reporting.
+
+**THINK-015:** Usage Monitoring.
+
+**THINK-016:** Cost Control.
+
+## 17.3 المكونات التقنية
+
+- AI Orchestrator.
+- Model Gateway.
+- Retrieval Service.
+- Vector Index.
+- Knowledge Ingestion.
+- Prompt Configuration.
+- Conversation Management.
+- Evaluation Engine.
+- Usage Metering.
+- Safety Controls.
+
+## 17.4 RAG
+
+العملية:
+
+1. استقبال السؤال.
+2. تحديد المستخدم وصلاحياته.
+3. تحديد سياق الدرس.
+4. استرجاع المحتوى المسموح.
+5. إنشاء سياق مناسب.
+6. إرسال الطلب إلى نموذج AI.
+7. معالجة النتيجة.
+8. إظهار الإجابة ومصادرها.
+9. تسجيل بيانات التشغيل والتقييم.
+
+## 17.5 قواعد THINK
+
+- عدم اختلاق مراجع.
+- توضيح عدم المعرفة عند نقص المعلومات.
+- عدم كشف بيانات مستخدم آخر.
+- عدم اعتبار المستندات المسترجعة تعليمات تشغيل موثوقة.
+- منع تجاوز قواعد الاختبارات.
+- تقديم تلميحات تدريجية عند ملاءمتها.
+- دعم العربية والإنجليزية.
+- احترام إعدادات الخصوصية.
+- توفير طريقة للإبلاغ عن الردود الخاطئة.
+
+## 17.6 اختبارات الجودة
+
+يتم إعداد مجموعة تقييم تشمل:
+
+- صحة الشرح.
+- جودة الاستدلال بالمصادر.
+- فهم سياق الدرس.
+- الأسئلة خارج النطاق.
+- الاستفسارات الناقصة.
+- الأخطاء البرمجية.
+- محاولات تجاوز الصلاحيات.
+- Prompt Injection.
+- وضوح الردود بالعربية والإنجليزية.
+
+معيار أولي مقترح: 45 إجابة مقبولة من 50 سؤالًا مرجعيًا، مع صفر أخطاء شديدة في مجموعة التقييم.
+
+---
+
+# 18. University Ecosystem
+
+**Module: OC-UNIV — P1/P2**
+
+## 18.1 الأندية الطلابية
+
+- إنشاء الأندية.
+- الملفات التعريفية.
+- إدارة الأعضاء.
+- الأدوار التنظيمية.
+- المنشورات والإعلانات.
+- المحتوى المخصص.
+
+## 18.2 الفعاليات
+
+- إنشاء الفعاليات.
+- استقبال التسجيلات.
+- إدارة السعة.
+- تسجيل الحضور.
+- إصدار شهادات.
+- التحقق من الشهادات.
+
+## 18.3 الفرص
+
+- التدريب.
+- التطوع.
+- الوظائف.
+- المنح.
+- المؤتمرات.
+- الإرشاد المهني.
+
+## 18.4 Marketplace
+
+- المنتجات.
+- الأسعار.
+- الطلبات.
+- المخزون.
+- الدفع.
+- التقارير المالية.
+
+يُحدد نطاق هذه الوحدات بعد مراجعة ما هو موجود في Medical Club، إذ يمكن أن تكون بعض الخدمات قابلة للتعميم دون إعادة تطوير كاملة.
+
+---
+
+# 19. التصميم وواجهات المستخدم — UI/UX
+
+**Module: OC-UX**
+
+## 19.1 المنهج
+
+إعداد تصميم موحد باستخدام Design System يسمح بإعادة استخدام المكونات.
+
+## 19.2 المتطلبات
+
+- Responsive Design.
+- Mobile-first.
+- RTL / LTR.
+- Dark / Light Mode.
+- Accessible Components.
+- Consistent Navigation.
+- Loading States.
+- Error States.
+- Empty States.
+- Form Validation Feedback.
+
+## 19.3 واجهات الطالب
+
+- Landing Page.
+- Login / Registration.
+- Student Dashboard.
+- Academic Catalog.
+- Course Pages.
+- Learning Paths.
+- Lesson Viewer.
+- Assessment Pages.
+- Code Editor.
+- THINK.
+- Library.
+- Progress.
+- Account Settings.
+
+## 19.4 واجهات الإدارة
+
+- Admin Dashboard.
+- User Management.
+- Academic Management.
+- Content Management.
+- Learning Paths.
+- Question Banks.
+- Permissions.
+- Notifications.
+- Reports.
+- THINK Monitoring.
+- System Configuration.
+
+## 19.5 توثيق الشاشات
+
+لكل شاشة يجب توثيق:
+
+- Screen ID.
+- Route.
+- Purpose.
+- Authorized Users.
+- UI Components.
+- Data Sources.
+- Related APIs.
+- Loading State.
+- Empty State.
+- Error State.
+- Responsive Behavior.
+- Accessibility Requirements.
+- Acceptance Criteria.
+
+---
+
+# 20. Backend Architecture
+
+**Module: OC-BE**
+
+## 20.1 مبدأ التنفيذ
+
+إعادة استخدام بنية Backend الموجودة حيث تكون مناسبة، مع تطويرها إلى هيكل معياري واضح.
+
+لا يُفرض الانتقال إلى تقنية جديدة دون مبرر.
+
+## 20.2 Modular Architecture
+
+المجالات المقترحة:
+
+- Identity.
+- Users.
+- Academic.
+- Content.
+- Learning.
+- Assessments.
+- Programming.
+- THINK Integration.
+- Notifications.
+- Administration.
+- Analytics.
+- Billing.
+- University Services.
+
+## 20.3 Architecture Constraints
+
+- فصل Business Logic عن Controllers.
+- عدم الوصول المباشر إلى قواعد البيانات من Frontend.
+- تطبيق Authorization داخل الخدمات.
+- دعم Validation.
+- توثيق Error Contracts.
+- إدارة Transactions.
+- استخدام Dependency Injection.
+- دعم Idempotency.
+- توفير Structured Logging.
+- إنشاء اختبارات آلية مناسبة.
+
+## 20.4 Refactoring Rules
+
+لا يُقبل Refactoring يؤدي إلى تغيير غير مقصود في السلوك.
+
+يجب:
+
+1. توثيق السلوك الحالي.
+2. توفير اختبارات تثبته.
+3. تنفيذ التعديل.
+4. مقارنة النتائج.
+5. تحديث التوثيق.
+6. تسجيل القرار والتغييرات.
+
+---
+
+# 21. Database Re-engineering
+
+**Module: OC-DB**
+
+## 21.1 الهدف
+
+تحويل نموذج البيانات إلى نموذج عام يدعم OctaClub دون فقدان الاتساق أو بناء قاعدة بيانات جديدة من الصفر بلا داعٍ.
+
+## 21.2 الأعمال المطلوبة
+
+- مراجعة جميع الجداول.
+- إزالة الاعتماد على نموذج النادي الطبي.
+- تعميم الكيانات الأكاديمية.
+- مراجعة العلاقات.
+- مراجعة الفهارس.
+- مراجعة القيود.
+- مراجعة Migrations.
+- حذف الكيانات غير المستخدمة بصورة آمنة.
+- إضافة كيانات THINK.
+- إضافة كيانات Tech Path.
+- إضافة البيانات المطلوبة للتقدم والتقييم.
+- تحسين الاستعلامات.
+- توثيق Data Dictionary.
+
+## 21.3 مخطط الكيانات المستهدف
+
+**Identity**
+Users, Profiles, Roles, Permissions, Sessions.
+
+**Academic**
+Universities, Faculties, Programs, Courses, AcademicTerms.
+
+**Content**
+Resources, Lessons, ContentBlocks, ContentVersions.
+
+**Learning**
+LearningPaths, Modules, Enrollments, Progress, Objectives.
+
+**Assessments**
+Questions, Assessments, Attempts, Answers, Results.
+
+**Programming**
+Challenges, Submissions, ExecutionJobs, Results.
+
+**THINK**
+Conversations, Messages, Feedback, KnowledgeDocuments, KnowledgeChunks, UsageRecords.
+
+**Operations**
+Notifications, AuditLogs, SystemSettings, FeatureFlags.
+
+**Extended**
+Clubs, Events, Opportunities, Subscriptions, Products, Orders.
+
+القائمة منطقية أولية، ولا تعني ضرورة إنشاء جدول جديد لكل اسم إذا كان هناك نموذج قائم صالح.
+
+## 21.4 Database Documentation
+
+لكل جدول:
+
+- Purpose.
+- Columns.
+- Data Types.
+- Primary Key.
+- Foreign Keys.
+- Unique Constraints.
+- Indexes.
+- Relationships.
+- Delete Behavior.
+- Default Values.
+- Validation Rules.
+- Ownership.
+- Retention Policy.
+- Related APIs.
+- Migration History.
+
+---
+
+# 22. API Re-engineering & Documentation
+
+**Module: OC-API**
+
+## 22.1 المبدأ
+
+لا يتم إنشاء Endpoint جديد قبل التحقق من وجود Endpoint يؤدي الوظيفة نفسها بصورة صحيحة وآمنة.
+
+## 22.2 مراجعة العمليات
+
+كل Endpoint موجود يمر بالمراحل التالية:
+
+1. Identify.
+2. Understand.
+3. Verify.
+4. Document.
+5. Compare with New Requirements.
+6. Retain / Adapt / Refactor / Rewrite / Remove.
+7. Test.
+8. Approve.
+
+## 22.3 توحيد العقود
+
+- REST Conventions.
+- API Versioning.
+- Request DTOs.
+- Response DTOs.
+- Standard Error Schemas.
+- Authentication.
+- Authorization.
+- Pagination.
+- Filtering.
+- Validation.
+- Rate Limits.
+- Idempotency.
+- OpenAPI.
+
+## 22.4 قالب توثيق Endpoint
+
+**Endpoint ID:** OC-API-001
+
+**Method:** GET / POST / PUT / PATCH / DELETE
+
+**Route:** /api/v1/...
+
+**Description:** وظيفة العملية.
+
+**Module:** الوحدة المسؤولة.
+
+**Actor:** المستخدم المستهدف.
+
+**Authorization:** الصلاحيات المطلوبة.
+
+**Request:** الحقول وأنواعها والتحقق منها.
+
+**Response:** البنية والحالات المتوقعة.
+
+**Errors:** رموز الأخطاء وأسبابها.
+
+**Database:** الجداول المستخدمة.
+
+**Business Rules:** قواعد العمل.
+
+**Side Effects:** العمليات الناتجة.
+
+**Security:** ضوابط الحماية.
+
+**Performance:** القيود والأهداف.
+
+**Tests:** حالات الاختبار.
+
+**Original Endpoint:** المسار السابق إن وجد.
+
+**Decision:** Retain / Refactor / Adapt / Rewrite / Remove / New.
+
+**Status:** حالة التنفيذ والتوثيق والاختبار.
+
+## 22.5 منع التكرار
+
+عند وجود عمليتين تؤديان وظيفة متطابقة:
+
+- تتم مقارنة السلوك والصلاحيات والبيانات.
+- يُعتمد عقد موحد عند إمكانية ذلك.
+- تُحدد خطة إزالة التكرار.
+- تُحدّث جميع الجهات المستهلكة للعقد.
+- لا يُحذف مسار قبل التأكد من عدم كسر الاعتماديات.
+
+---
+
+# 23. Security & Privacy
+
+**Module: OC-SEC**
+
+## المتطلبات
+
+- Secure Authentication.
+- Server-side Authorization.
+- IDOR Protection.
+- Input Validation.
+- SQL Injection Protection.
+- XSS Protection.
+- CSRF Protection عند انطباقه.
+- Secure File Uploads.
+- Rate Limiting.
+- Secrets Management.
+- Secure AI Integration.
+- Code Execution Isolation.
+- Audit Logging.
+- Encryption in Transit.
+- Backup Protection.
+
+## الخصوصية
+
+- جمع البيانات الضرورية فقط.
+- فصل البيانات الشخصية عن التحليلات المجمعة.
+- تحديد سياسة احتفاظ.
+- توفير آلية حذف الحساب.
+- توثيق نقل البيانات إلى خدمات خارجية.
+- منع استخدام بيانات العميل السابق.
+- تقييد وصول المسؤولين.
+- تسجيل العمليات الحساسة.
+
+---
+
+# 24. Infrastructure & DevOps
+
+**Module: OC-OPS**
+
+## 24.1 البيئات
+
+- Development.
+- Staging.
+- Production.
+
+## 24.2 البنية
+
+- Application Hosting.
+- PostgreSQL.
+- Object Storage.
+- Background Workers.
+- THINK Service.
+- Code Runner.
+- Reverse Proxy.
+- TLS.
+- Monitoring.
+- Backups.
+
+## 24.3 DevOps Requirements
+
+- Git Workflow.
+- Pull Requests.
+- CI/CD.
+- Automated Builds.
+- Automated Tests.
+- Versioned Releases.
+- Database Migrations.
+- Deployment Verification.
+- Rollback.
+- Secrets Management.
+
+## 24.4 الأداء والاعتمادية
+
+الأهداف الأولية المقترحة:
+
+- LCP لا يتجاوز 2.5 ثانية للصفحات الحرجة في ظروف اختبار معتمدة.
+- p95 لاستجابة API الأساسية أقل من 800ms ضمن حمل محدد.
+- توافر شهري مستهدف 99.5%.
+- نسخ احتياطي آلي.
+- اختبار استعادة دوري.
+- عدم تعطيل الـ Core API عند فشل THINK.
+- عزل مهام تشغيل الكود عن الخدمات الأخرى.
+
+تُعتمد الأهداف النهائية بعد اختبار الحمل وتحديد سعة النشر.
+
+---
+
+# 25. نظام التوثيق الشامل — Documentation Framework
+
+**Workstream: DOC-01**  
+**الأولوية: إلزامية لجميع المكونات**
+
+## 25.1 الهدف
+
+إنشاء مصدر موثوق يشرح النظام من الناحية الوظيفية والهندسية والتشغيلية.
+
+لا يجب أن تعتمد معرفة النظام على ذاكرة مطور واحد أو محادثات غير موثقة.
+
+## 25.2 مستويات التوثيق
+
+### Level 1 — Product Documentation
+
+- Product Vision.
+- PRD.
+- SRS.
+- User Personas.
+- User Journeys.
+- Feature List.
+- Acceptance Criteria.
+- Product Roadmap.
+
+### Level 2 — Architecture Documentation
+
+- System Context Diagram.
+- Container Diagram.
+- Component Diagrams.
+- Deployment Architecture.
+- Integration Diagram.
+- Data Flow Diagrams.
+- Architecture Decision Records.
+
+### Level 3 — Backend Documentation
+
+- Modules.
+- Services.
+- Business Rules.
+- Endpoints.
+- DTOs.
+- Authorization.
+- Validation.
+- Error Handling.
+- Background Jobs.
+- External Integrations.
+
+### Level 4 — Database Documentation
+
+- ERD.
+- Data Dictionary.
+- Table Relationships.
+- Indexes.
+- Constraints.
+- Migration Strategy.
+- Data Ownership.
+- Retention Policies.
+
+### Level 5 — Frontend Documentation
+
+- Pages.
+- Routes.
+- Components.
+- Design Tokens.
+- State Management.
+- API Dependencies.
+- Responsive Behavior.
+- User Interaction Flows.
+
+### Level 6 — THINK Documentation
+
+- AI Architecture.
+- Model Providers.
+- Model Configurations.
+- Prompt Versions.
+- Retrieval Pipeline.
+- Knowledge Sources.
+- Embedding Strategy.
+- Security Boundaries.
+- Evaluation Dataset.
+- Quality Metrics.
+- Usage Limits.
+- Cost Monitoring.
+
+### Level 7 — Testing Documentation
+
+- Test Strategy.
+- Unit Test Plan.
+- Integration Tests.
+- E2E Test Cases.
+- Security Test Cases.
+- AI Evaluations.
+- Performance Benchmarks.
+- UAT Scenarios.
+
+### Level 8 — Operations Documentation
+
+- Infrastructure.
+- Deployment Guide.
+- Environment Configuration.
+- Monitoring.
+- Backup & Restore.
+- Incident Response.
+- Rollback.
+- Disaster Recovery.
+- Troubleshooting.
+
+### Level 9 — Commercial & Administrative Documentation
+
+- Product Ownership.
+- Licensing.
+- Terms of Service.
+- Privacy Policy.
+- Subscription Policies.
+- Support Processes.
+- Release Policies.
+
+## 25.3 Documentation Repository
+
+البنية المقترحة:
+
+```text
+octaclub/
+├── apps/
+│   ├── web/
+│   ├── api/
+│   └── admin/
+├── services/
+│   ├── think/
+│   ├── code-runner/
+│   └── workers/
+├── tests/
+├── infrastructure/
+├── scripts/
+└── docs/
+    ├── 00-project/
+    │   ├── overview.md
+    │   ├── scope.md
+    │   ├── requirements.md
+    │   └── roadmap.md
+    ├── 01-legacy-audit/
+    │   ├── system-inventory.md
+    │   ├── api-inventory.md
+    │   ├── feature-matrix.md
+    │   ├── technical-debt.md
+    │   └── reengineering-decisions.md
+    ├── 02-architecture/
+    │   ├── overview.md
+    │   ├── components.md
+    │   ├── deployment.md
+    │   └── decisions/
+    ├── 03-backend/
+    │   ├── modules/
+    │   ├── apis/
+    │   └── business-rules/
+    ├── 04-database/
+    │   ├── schema.md
+    │   ├── dictionary.md
+    │   ├── migrations.md
+    │   └── diagrams/
+    ├── 05-frontend/
+    │   ├── pages/
+    │   ├── components/
+    │   └── design-system/
+    ├── 06-think/
+    │   ├── architecture.md
+    │   ├── retrieval.md
+    │   ├── prompts.md
+    │   ├── evaluation.md
+    │   └── safety.md
+    ├── 07-security/
+    ├── 08-testing/
+    ├── 09-operations/
+    ├── 10-release/
+    └── 11-user-guides/
+```
+
+هذا هيكل مقترح يهدف لتنظيم التوثيق بجانب الشيفرة البرمجية، ويمكن تعديله بعد دراسة بنية المستودع الحالي.
+
+## 25.4 Documentation Standards
+
+- Markdown للتوثيق الأساسي.
+- OpenAPI للـ API.
+- ERD لمخطط البيانات.
+- Mermaid أو أدوات مناسبة للمخططات.
+- ADRs للقرارات المعمارية.
+- Version Control لجميع الوثائق.
+- Pull Request Review للتغييرات المهمة.
+
+## 25.5 تحديث التوثيق
+
+أي تغيير يؤثر على API أو البيانات أو الواجهة أو السلوك يجب أن يتضمن تحديثًا مطابقًا للوثائق.
+
+لا يُسمح بتأجيل التوثيق إلى نهاية المشروع بصورة تؤدي إلى فقدان المعرفة.
+
+---
+
+# 26. Traceability & Change Management
+
+## 26.1 مصفوفة تتبع المتطلبات
+
+يجب توفير سجل يربط:
+
+Requirement → Existing Component → Re-engineering Decision → New Component → Test → Documentation → Release
+
+## 26.2 نموذج السجل
+
+| الحقل | الوصف |
+|---|---|
+| Requirement ID | المعرف |
+| Feature | الميزة |
+| Priority | الأولوية |
+| Legacy Component | المكون السابق |
+| Current Status | حالة التنفيذ المتحقق منها |
+| Decision | إعادة الاستخدام أو التعديل |
+| Target Component | المكون المستهدف |
+| Owner | المسؤول |
+| Test Reference | الاختبار |
+| Documentation | مرجع التوثيق |
+| Release | الإصدار المستهدف |
+
+## 26.3 Change Requests
+
+كل تغيير كبير بعد تثبيت النطاق يجب أن يحتوي على:
+
+- سبب التغيير.
+- القيمة المتوقعة.
+- المكونات المتأثرة.
+- آثار قواعد البيانات.
+- آثار الـ API.
+- آثار الواجهات.
+- المخاطر.
+- التعديلات المطلوبة في الاختبارات.
+- قرار الاعتماد.
+
+---
+
+# 27. Quality Assurance
+
+## 27.1 Regression Testing
+
+يعتبر Regression Testing من أهم متطلبات المشروع.
+
+تتطلب إعادة هندسة النظام الموجود التحقق من عدم تعطيل الوظائف التي ثبتت صحتها قبل التعديل.
+
+## 27.2 أنواع الاختبارات
+
+- Unit Tests.
+- Integration Tests.
+- API Contract Tests.
+- Database Migration Tests.
+- Regression Tests.
+- End-to-End Tests.
+- Security Tests.
+- Performance Tests.
+- THINK Evaluation.
+- Code Runner Isolation Tests.
+- User Acceptance Tests.
+
+## 27.3 اختبار المكونات القديمة
+
+كل مكون يتم الاحتفاظ به يجب أن يمر بـ:
+
+1. مراجعة السلوك.
+2. تحديد سيناريوهات الاختبار.
+3. تشغيل الاختبارات الموجودة.
+4. معالجة الاختبارات الناقصة.
+5. توثيق النتيجة.
+
+## 27.4 اختبار إعادة الهيكلة
+
+قبل Refactor:
+
+- تحديد السلوك الحالي.
+- إنشاء اختبارات مناسبة.
+
+بعد Refactor:
+
+- مقارنة النتائج.
+- فحص التوافق.
+- تشغيل اختبارات التكامل.
+- تحديث التوثيق.
+
+---
+
+# 28. خطة التنفيذ — Execution Roadmap
+
+## Phase 1 — Recovery, Audit & Documentation Baseline
+
+**1–10 ديسمبر 2026**
+
+المهام:
+
+- استرجاع المستودعات والنسخ البرمجية الصحيحة.
+- تأكيد الوصول الفني إلى المستودعات والبيئات؛ ملكية كود MedClub محسومة.
+- فحص Backend.
+- فحص Database.
+- فحص APIs.
+- فحص Infrastructure.
+- استخراج Endpoint Inventory.
+- حصر جميع الوحدات.
+- تصنيف المكونات.
+- تسجيل Technical Debt.
+- تجهيز مستودع التوثيق.
+- اعتماد Re-engineering Backlog.
+
+**المخرجات:**
+
+- As-Is Architecture.
+- System Inventory.
+- Feature Matrix.
+- API Inventory.
+- Database Report.
+- Technical Debt Register.
+- Reuse Decisions.
+
+## Phase 2 — Core Re-engineering
+
+**11–31 ديسمبر 2026**
+
+المهام:
+
+- إعادة هوية النظام.
+- إزالة ارتباطات Medical Club.
+- تكييف Authentication.
+- إعادة هندسة Roles.
+- تعميم Academic Catalog.
+- تحسين Database Schema.
+- مراجعة CMS.
+- إزالة الوظائف غير المطلوبة.
+- معالجة المشاكل التقنية الأساسية.
+- إعداد بيئات المنتج الجديد.
+- بدء تطوير تصميم الواجهات.
+- تحديث التوثيق بالتوازي.
+
+**المخرجات:**
+
+Core OctaClub Foundation تعمل على Staging، مع توثيق بنيوي ووظيفي.
+
+## Phase 3 — Learning System & Product Integration
+
+**1–15 يناير 2027**
+
+المهام:
+
+- استكمال LMS.
+- تطوير Learning Paths.
+- تطوير Student Dashboard.
+- تطوير Assessment Integration.
+- استكمال Resource Library.
+- ربط الواجهات مع API.
+- إنشاء محتوى المسار الأول.
+- بداية THINK Integration.
+- إعداد Tech Path.
+
+**المخرجات:**
+
+رحلة تعلم أساسية متكاملة قابلة للاختبار.
+
+## Phase 4 — THINK & Interactive Learning
+
+**16–31 يناير 2027**
+
+المهام:
+
+- THINK Orchestrator.
+- Retrieval & RAG.
+- Context Management.
+- Conversation Management.
+- AI Evaluation.
+- Code Editor.
+- Code Runner.
+- Programming Challenges.
+- THINK Programming Assistance.
+- إكمال الوظائف المتبقية من نطاق P0.
+- Integration Testing.
+- تحديث جميع الوثائق.
+
+**المخرجات:**
+
+OctaClub + THINK + Tech Path تعمل ضمن رحلة مستخدم متكاملة.
+
+## Phase 5 — Stabilization & Verification
+
+**1–14 فبراير 2027**
+
+المهام:
+
+- Regression Testing.
+- API Contract Testing.
+- Security Testing.
+- Code Runner Security Review.
+- THINK Evaluation.
+- Performance Optimization.
+- Database Review.
+- Content Verification.
+- Error Fixing.
+- Backup & Restore Testing.
+- Documentation Review.
+
+**المخرجات:**
+
+Release Candidate خاضعة للاختبارات.
+
+## Phase 6 — Acceptance & Production Release
+
+**15–28 فبراير 2027**
+
+المهام:
+
+- User Acceptance Testing.
+- معالجة العيوب المانعة.
+- مراجعة جودة المحتوى.
+- مراجعة الأمان.
+- مراجعة اكتمال التوثيق.
+- Production Deployment.
+- Monitoring Setup.
+- Backup Verification.
+- Operations Runbooks.
+- Release Notes.
+- Final Go/No-Go Decision.
+
+**المخرجات:**
+
+إصدار Full Product V1 منشور وجاهز للاستخدام، إذا استوفى شروط الاعتماد والجودة.
+
+---
+
+# 29. توزيع المسؤوليات
+
+## Tareq Orabi
+
+**CEO / Project Manager / Solution Architect**
+
+المسؤوليات:
+
+- قيادة المشروع.
+- اعتماد Scope.
+- إدارة Re-engineering Decisions.
+- مراجعة المعمارية.
+- الإشراف على تدقيق الكود السابق.
+- توجيه Backend Engineering.
+- مراجعة التغييرات الحساسة.
+- الإشراف على Security & Infrastructure.
+- اعتماد Standards.
+- مراجعة اكتمال التوثيق.
+- اتخاذ قرار الإطلاق.
+
+## Mazen Abu Tahoun
+
+**Deputy CEO / Frontend Lead**
+
+المسؤوليات:
+
+- Frontend Audit عند توفر كود سابق مناسب.
+- UI/UX.
+- Design System.
+- Frontend Refactoring.
+- OctaClub Interfaces.
+- THINK UI.
+- Tech Path Editor UI.
+- API Integration.
+- Accessibility.
+- Frontend Documentation.
+- Frontend Testing.
+
+## Zaid Al Taih
+
+**Backend Lead**
+
+المسؤوليات:
+
+- Legacy Backend Audit.
+- API Inventory.
+- Backend Refactoring.
+- Database Re-engineering.
+- Academic Catalog.
+- Authentication.
+- CMS.
+- Learning Services.
+- Assessments.
+- API Contracts.
+- Backend Tests.
+- Backend Documentation.
+
+## Zaid Abu Hammour
+
+**AI Lead**
+
+المسؤوليات:
+
+- THINK Architecture.
+- AI Integrations.
+- Model Gateway.
+- Knowledge Ingestion.
+- RAG.
+- Prompt Management.
+- AI Evaluation.
+- Usage Monitoring.
+- Cost Controls.
+- THINK Security.
+- AI Documentation.
+- Integration Support.
+
+## مسؤولية مشتركة
+
+جميع أعضاء الفريق مسؤولون عن تحديث التوثيق الخاص بالتغييرات التي ينفذونها.
+
+لا تتحول كتابة التوثيق إلى مهمة منفصلة لشخص واحد لا يمتلك معرفة المكون.
+
+---
+
+# 30. Definition of Done
+
+لا تعتبر أي وحدة أو Feature مكتملة إلا عند تحقق:
+
+1. اعتماد المتطلبات.
+2. تنفيذ الوظيفة.
+3. اجتياز الاختبارات.
+4. مراجعة الكود.
+5. تحقق الصلاحيات.
+6. معالجة الأخطاء المعروفة.
+7. تحديث API Documentation.
+8. تحديث Database Documentation عند الحاجة.
+9. تحديث Architecture Documentation عند الحاجة.
+10. تحديث UI Documentation عند الحاجة.
+11. تسجيل قرار إعادة الهندسة.
+12. تحديث سجل التتبع.
+13. نجاح الاختبار على Staging.
+14. اعتماد المسؤول الفني.
+
+**Documentation is part of Done.**
+
+---
+
+# 31. إدارة المخاطر
+
+| الخطر | المعالجة |
+|---|---|
+| افتراض أن ميزة قديمة مكتملة دون اختبار | تدقيق فعلي لكل وظيفة |
+| إعادة كتابة مكونات صالحة | اعتماد Reuse-First |
+| انتقال بيانات أو أسرار قديمة إلى المنتج الجديد | فصل البيئات والبيانات والأسرار ومراجعة إعداداتها |
+| أخطاء أثناء Refactoring | Regression Tests |
+| بقاء ارتباطات بالنظام القديم | Dependency & Branding Audit |
+| تضخم النطاق | Scope Baseline |
+| تأخر THINK | نطاق AI محدود ومعايير واضحة |
+| مخاطر Code Runner | عزل واختبار أمني |
+| ضعف التوثيق | Documentation Gate لكل مهمة |
+| اختلاف API عن الواجهة | Contract Testing |
+| مشاكل Migration | Backup وMigration Tests |
+| فقدان المعرفة التقنية | توثيق ضمن المستودع |
+| ارتفاع تكلفة AI | Monitoring & Usage Limits |
+| تأخر المحتوى | Content Review بالتوازي |
+| اعتماد كبير على مطور واحد | Ownership وتوثيق ومراجعات مشتركة |
+
+---
+
+# 32. معايير قبول الإصدار
+
+## Functional Acceptance
+
+- نظام الحسابات يعمل.
+- الهيكل الأكاديمي متعدد الجامعات يعمل.
+- CMS يعمل.
+- إدارة المواد والدروس تعمل.
+- Learning Paths تعمل.
+- الاختبارات والتقدم يعملان.
+- Student Dashboard تعمل.
+- THINK متكامل مع المحتوى.
+- Tech Path يعمل.
+- Code Runner آمن ضمن نطاق اللغات المعتمدة.
+- Admin Panel تعمل.
+- Search يعمل.
+
+## Re-engineering Acceptance
+
+- جميع المكونات الموجودة تم حصرها.
+- جميع Endpoints تم تصنيفها.
+- جميع المكونات المعاد استخدامها اجتازت الفحص.
+- أزيلت الاعتماديات القديمة غير المطلوبة.
+- لا توجد بيانات أو أسرار خاصة بالعميل السابق.
+- كود MedClub معتمد كأصل مملوك لـOctagram؛ اكتمل فحصه التقني وتصنيف مكوناته.
+- اجتازت التعديلات اختبارات Regression المناسبة.
+- أصبحت بيئات OctaClub مستقلة.
+
+## Documentation Acceptance
+
+- Architecture Documentation مكتملة.
+- API Documentation تغطي جميع العمليات المنشورة.
+- Database Schema موثق.
+- Data Dictionary محدث.
+- Role & Permission Matrix معتمدة.
+- THINK Documentation مكتملة لنطاق الإصدار.
+- Frontend Screen Documentation مكتملة.
+- Deployment Guide موجود.
+- Testing Documentation موجودة.
+- Runbooks موجودة.
+- جميع القرارات الهندسية المؤثرة مسجلة.
+
+## Security Acceptance
+
+- لا توجد ثغرات حرجة أو مانعة للإطلاق.
+- اختبار Authorization ناجح.
+- الأسرار محمية.
+- Code Runner معزول.
+- THINK لا يتجاوز صلاحيات الوصول.
+- النسخ الاحتياطي والاستعادة مجربان.
+- المراقبة والتعامل مع الحوادث جاهزان.
+
+---
+
+# 33. المخرجات النهائية — Final Deliverables
+
+## Product Deliverables
+
+1. OctaClub Web Platform.
+2. THINK Learning Engine.
+3. Tech Path.
+4. Student Dashboard.
+5. Content Management.
+6. Academic Management.
+7. Assessment Engine.
+8. Administration Platform.
+9. Search & Resource Library.
+10. Production Deployment.
+
+## Engineering Deliverables
+
+1. Re-engineered Source Code.
+2. Cleaned & Updated Architecture.
+3. Updated Database Schema.
+4. Database Migrations.
+5. Verified API Contracts.
+6. Automated Tests.
+7. Secure Code Runner.
+8. AI Integration.
+9. CI/CD Pipeline.
+10. Monitoring & Backup Configuration.
+
+## Documentation Deliverables
+
+1. Legacy System Audit.
+2. Re-engineering Decision Matrix.
+3. PRD & SRS.
+4. Architecture Documentation.
+5. Database Documentation.
+6. API Reference.
+7. Frontend Documentation.
+8. THINK Technical Specification.
+9. Security Documentation.
+10. Test Plan & Results.
+11. Deployment Documentation.
+12. Operations Runbook.
+13. Maintenance Guide.
+14. Release Notes.
+15. Technical Debt & Future Roadmap.
+
+---
+
+# 34. سجل القرارات الفنية
+
+**DEC-001:** تحديد النسخة المرجعية النهائية من مستودع Medical Club.
+
+**DEC-002 — محسوم:** كود Medical Club مملوك لـOctagram وإعادة استخدامه معتمدة؛ لا يتطلب مراجعة ملكية إضافية.
+
+**DEC-003:** اعتماد قائمة المكونات المكتملة والقابلة لإعادة الاستخدام.
+
+**DEC-004:** تحديد المكونات التي تحتاج إلى إعادة كتابة.
+
+**DEC-005:** تثبيت Architecture النهائية.
+
+**DEC-006:** اعتماد مخطط قاعدة البيانات بعد التعميم.
+
+**DEC-007:** اعتماد جميع تغييرات الـ API.
+
+**DEC-008:** تحديد نطاق المسار التعليمي الأول.
+
+**DEC-009:** اعتماد تقنيات THINK ومزودي النماذج.
+
+**DEC-010:** اعتماد بيئة Code Execution.
+
+**DEC-011:** تحديد وحدات P1 التي تدخل إصدار فبراير.
+
+**DEC-012:** اعتماد معايير الجاهزية والإطلاق.
+
+**DEC-013:** اعتماد آلية مراجعة التوثيق.
+
+---
+
+# 35. الخاتمة — Project Conclusion
+
+OctaClub + THINK ليس مشروعًا جديدًا يبدأ من الصفر، وإنما عملية إعادة هندسة وتطوير منتج موجود، تستفيد من الاستثمار التقني السابق وتعيد توجيهه إلى رؤية تعليمية وتجارية أوسع.
+
+تبدأ عملية التنفيذ من فهم النظام المملوك للشركة والتحقق من حالته التقنية وتحديد قرارات إعادة الاستخدام والتحسين وفق نتائج الاختبارات.
+
+بعد ذلك تُنفذ التعديلات والتحسينات والتوسعات اللازمة، مع الحفاظ على التوافق بين الأنظمة ورفع جودة الشيفرة والتوثيق.
+
+يمثل THINK المحرك الذكي للمنتج، بينما يمثل Tech Path البيئة العملية للتعلم التقني، وتوفر OctaClub البنية الرئيسية للمحتوى والمستخدمين والتقدم والإدارة.
+
+تُعامل الوثائق الهندسية والوظيفية والتشغيلية بوصفها جزءًا أساسيًا من المنتج نفسه.
+
+**الهدف النهائي: تحويل النظام الموجود إلى OctaClub + THINK، كمنتج مستقل وموثق ومختبر وقابل للتشغيل والتوسع، مع استهداف إطلاق الإصدار الأول بحلول 28 فبراير 2027.**
+
+---
+
+**OCTAGRAM**  
+**OctaClub + THINK**  
+**Product Requirements, Software Re-engineering & Technical Documentation Specification**  
+**Version 1.2 — Execution Baseline**

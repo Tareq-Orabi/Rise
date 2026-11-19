@@ -1,0 +1,26 @@
+{
+  "name": "octagram-al-nuhud-2027",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "خطط Octagram لعام 2027 واجتماع الفريق",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/serve.mjs",
+    "dev": "node scripts/serve.mjs --watch",
+    "pdf": "node scripts/export-pdfs.mjs",
+    "release": "npm run build && npm run pdf && node scripts/embed-pdfs.mjs && npm run build",
+    "pdf:portable": "python3 scripts/export-pdfs.py"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.5",
+    "playwright-core": "1.62.1"
+  }
+}
