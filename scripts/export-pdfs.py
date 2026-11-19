@@ -135,7 +135,7 @@ def render(plan):
         c.setFillColor(HexColor('#ed873b'));c.rect(0,PAGE_H-2*mm,42*mm,2*mm,fill=1,stroke=0)
         c.drawImage(str(ASSETS/'octagram-logo.png'),PAGE_W-31*mm,PAGE_H-26*mm,20*mm,20*mm,mask='auto')
         c.setFont('Cairo-Bold',12);c.setFillColor(TEAL);c.drawRightString(PAGE_W-34*mm,PAGE_H-17*mm,'Octagram')
-        write_rtl(c,'ديسمبر 2026 - فبراير 2027' if plan['id']=='octaclub' else 'أبريل - ديسمبر 2027 | مقترح للاعتماد' if plan['id']=='octacare' else 'الخطة التشغيلية السنوية 2027',73*mm,PAGE_H-17*mm,size=9,color=MUTED)
+        write_rtl(c,'ديسمبر 2026 - فبراير 2027' if plan['id']=='octaclub' else 'أبريل - ديسمبر 2027 | مقترح للاعتماد' if plan['id']=='octacare' else 'دليل الخدمات' if plan['id']=='commercial' else 'الخطة التشغيلية السنوية 2027',73*mm,PAGE_H-17*mm,size=9,color=MUTED)
         c.setStrokeColor(LINE);c.line(14*mm,PAGE_H-29*mm,PAGE_W-14*mm,PAGE_H-29*mm)
         c.restoreState()
     story=[]

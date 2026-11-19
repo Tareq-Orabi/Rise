@@ -19,4 +19,4 @@ export const phases=[
  {project:'octacare',date:'أكتوبر–ديسمبر 2027',title:'التشغيل التجريبي',detail:'أول جهة في أكتوبر، توسع تدريجي في نوفمبر، وتقييم في ديسمبر.',gate:'نتائج الاستخدام والدفع وقرار 2028'},
 ];
 export function normalize(s){return s.toLowerCase().replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/[\u064b-\u065f]/g,'');}
-export const sections=plans.flatMap(p=>p.pages.map((page,index)=>({plan:p.id,name:p.name,title:page.title,index,href:p.id==='commercial'?`#/company/${['overview','services','method','experience','engagement','offer'][index]}`:undefined,text:normalize(JSON.stringify(page.blocks))})));
+export const sections=plans.flatMap(p=>p.pages.map((page,index)=>({plan:p.id,name:p.name,title:page.title,index,href:p.id==='commercial'?'#/company/services':undefined,text:normalize(JSON.stringify(page.blocks))})));
