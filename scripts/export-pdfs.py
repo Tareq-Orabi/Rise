@@ -173,5 +173,5 @@ def render(plan):
     print('Rendered',file.name,flush=True)
 
 if __name__=='__main__':
-    selected=[p for p in PLANS if len(sys.argv)<2 or p['id']==sys.argv[1]]
+    selected=[p for p in PLANS if p.get('pdfSource')!='original' and (len(sys.argv)<2 or p['id']==sys.argv[1])]
     for plan in selected:render(plan)

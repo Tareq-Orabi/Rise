@@ -50,7 +50,7 @@ async function checkPageCount(file, expected) {
 const browser = await chromium.launch({ executablePath: await locateChromium(), headless: true });
 const staging = await mkdtemp(path.join(outputDir, '.export-'));
 try {
-  for (const plan of selected) {
+  for (const plan of selected.filter(p => p.pdfSource !== 'original')) {
     const page = await browser.newPage({ locale: 'ar-JO' });
     const externalRequests = [];
     const runtimeErrors = [];
@@ -82,7 +82,7 @@ try {
     if (signature !== '%PDF-') throw new Error('Unexpected file format for ' + file);
     console.log('Rendered ' + plan.id + ' (' + plan.pages.length + ' pages).');
   }
-  for (const plan of selected) {
+  for (const plan of selected.filter(p => p.pdfSource !== 'original')) {
     const name = plan.id + '.pdf';
     await rename(path.join(staging, name), path.join(outputDir, name));
   }

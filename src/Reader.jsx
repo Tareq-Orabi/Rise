@@ -41,7 +41,7 @@ function PlanTask({ block }) {
   );
 }
 
-function PlanBlocks({ page }) {
+export function PlanBlocks({ page }) {
   const nodes = [];
   let bulletItems = [];
   function flushBullets() {
@@ -126,7 +126,7 @@ export function PlanReader({ plan, pageIndex = 0, onSelectPage, onPrint }) {
       <header className="or-head">
         <div className="or-head-copy"><div className="or-document-label">{plan.id === 'octaclub' ? 'برنامج إعادة الهندسة · ديسمبر 2026–فبراير 2027' : plan.id === 'octacare' ? 'مشروع OctaCare · أبريل–ديسمبر 2027 · مقترح للاعتماد' : 'الخطة التشغيلية السنوية · 2027'}</div><h1 id={titleId}>{plan.title}</h1><PlanSubtitle plan={plan} /></div>
         <div className="or-actions">
-          <a className="or-control or-download" href={plan.pdfUrl} download={`Octagram-2027-${plan.id}.pdf`}><Icon type="download" /> تحميل PDF</a>
+          <a className="or-control or-download" href={plan.pdfUrl} download={`Octagram-2027-${plan.id}.pdf`}><Icon type="download" /> {plan.pdfLabel || 'تحميل PDF'}</a>
           <button className="or-control" type="button" onClick={onPrint || (() => window.print())}><Icon type="print" /> طباعة الخطة</button>
         </div>
       </header>
