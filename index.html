@@ -6,6 +6,16 @@
   <meta name="theme-color" content="#155d62">
   <title>Octagram | الإدارة الداخلية — خطة 2027</title>
   <link rel="icon" href="data:,">
+  <script>
+    try {
+      const saved = localStorage.getItem('octagram-theme');
+      document.documentElement.dataset.theme = saved === 'dark' || saved === 'light'
+        ? saved
+        : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    } catch {
+      document.documentElement.dataset.theme = 'light';
+    }
+  </script>
   <!-- THIRD_PARTY_LICENSES -->
   <!-- STYLES -->
 </head>
