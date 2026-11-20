@@ -1,6 +1,14 @@
 import React from 'react';
 
 const paths = {
+  search: <><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 4.7 4.7" /></>,
+  grid: <><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></>,
+  users: <><circle cx="10" cy="8" r="3.3" /><path d="M3.5 20v-2c0-3 2.8-5 6.5-5s6.5 2 6.5 5v2M16 5c4-.5 5 5 .8 6M18 14c2.2.5 3.3 2 3.3 4v1" /></>,
+  case: <><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M3 11c5 3 13 3 18 0m-9 1v3" /></>,
+  checklist: <><path d="m3 6 1.5 1.5L7 4m-4 10 1.5 1.5L7 12m4-6h9m-9 8h9m-9 5h6" /></>,
+  target: <><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4" /><circle cx="12" cy="12" r=".7" /></>,
+  chevron: <path d="m14 6-6 6 6 6" />,
+
   arrow: (
     <>
       <path d="M19 12H5m6 6-6-6 6-6" />

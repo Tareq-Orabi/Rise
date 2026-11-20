@@ -1,5 +1,6 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { logoUrl } from './assets.js';
+import { normalize } from './management.js';
 import './reader.css';
 
 const arabicNumbers = new Intl.NumberFormat('ar-JO', { numberingSystem: 'arab' });
@@ -8,6 +9,7 @@ const number = value => arabicNumbers.format(value);
 function Icon({ type }) {
   const paths = {
     index: <><path d="M4 5h16M4 12h16M4 19h16" /><path d="M16 3v4m-7 3v4m5 3v4" /></>,
+    search: <><circle cx="10.7" cy="10.7" r="6.3" /><path d="m15.5 15.5 4.3 4.3" /></>,
     down: <path d="m6 9 6 6 6-6" />,
     download: <><path d="M12 3v11m-4-4 4 4 4-4" /><path d="M5 15v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4" /></>,
     print: <><path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" /><path d="M7 14h10v7H7zM17 11h.01" /></>,
@@ -89,13 +91,14 @@ function PlanSubtitle({ plan }) {
 
 export function PlanReader({ plan, pageIndex = 0, onSelectPage, onPrint }) {
   const [indexOpen, setIndexOpen] = useState(false);
+  const [query, setQuery] = useState('');
   const indexId = useId();
   const titleId = useId();
   const toggle = useRef(null);
   const sectionTitle = useRef(null);
   const focusSection = useRef(false);
   const safePageIndex = Math.max(0, Math.min(Math.trunc(Number(pageIndex)) || 0, (plan?.pages?.length || 1) - 1));
-  useEffect(() => { setIndexOpen(false); }, [plan?.id]);
+  useEffect(() => { setIndexOpen(false); setQuery(''); }, [plan?.id]);
   useEffect(() => {
     if (!focusSection.current || !sectionTitle.current) return;
     focusSection.current = false;
@@ -105,8 +108,14 @@ export function PlanReader({ plan, pageIndex = 0, onSelectPage, onPrint }) {
   if (!plan?.pages?.length) return null;
   const page = plan.pages[safePageIndex];
   const count = plan.pages.length;
+  const needle = normalize(query.trim());
+  const sections = plan.pages.map((section, index) => ({ title: section.title, index }))
+    .filter(({ title, index }) => !needle || normalize(title).includes(needle) || String(index + 1) === needle || number(index + 1) === needle);
+  const sectionCount = count === 1 ? 'قسم واحد' : count === 2 ? 'قسمان'
+    : `${number(count)} ${count <= 10 ? 'أقسام' : 'قسمًا'}`;
   const selectPage = nextIndex => {
     setIndexOpen(false);
+    setQuery('');
     if (nextIndex === safePageIndex) {
       sectionTitle.current?.focus({ preventScroll: true });
       sectionTitle.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
@@ -130,24 +139,29 @@ export function PlanReader({ plan, pageIndex = 0, onSelectPage, onPrint }) {
           <button className="or-control" type="button" onClick={onPrint || (() => window.print())}><Icon type="print" /> طباعة الخطة</button>
         </div>
       </header>
-      <div className="or-index" onKeyDown={onIndexKeyDown}>
-        <button ref={toggle} type="button" className="or-index-toggle" onClick={() => setIndexOpen(!indexOpen)} aria-expanded={indexOpen} aria-controls={indexId}>
-          <span className="or-index-label"><Icon type="index" /> فهرس الخطة</span>
-          <span className="or-index-count">{number(count)} {count <= 10 ? 'أقسام' : 'قسمًا'}</span><span className={indexOpen ? 'or-chevron is-open' : 'or-chevron'}><Icon type="down" /></span>
-        </button>
-        <nav id={indexId} aria-label="فهرس أقسام الخطة" hidden={!indexOpen}>
-          <ol className="or-index-list">{plan.pages.map((section, i) => <li key={i}><button type="button" aria-current={i === safePageIndex ? 'page' : undefined} onClick={() => selectPage(i)}><span className="or-section-num" aria-hidden="true">{number(i + 1)}</span><span>{section.title}</span></button></li>)}</ol>
-        </nav>
+      <div className="or-layout">
+        <aside className="or-index" onKeyDown={onIndexKeyDown}>
+          <button ref={toggle} type="button" className="or-index-toggle" onClick={() => setIndexOpen(!indexOpen)} aria-expanded={indexOpen} aria-controls={indexId}>
+            <span className="or-index-label"><Icon type="index" /> فهرس الخطة</span>
+            <span className="or-index-count">{sectionCount}</span><span className={indexOpen ? 'or-chevron is-open' : 'or-chevron'}><Icon type="down" /></span>
+          </button>
+          <div className="or-rail-head" aria-hidden="true"><span className="or-index-label"><Icon type="index" /> فهرس الخطة</span><span className="or-index-count">{sectionCount}</span></div>
+          <nav id={indexId} className={'or-index-content' + (indexOpen ? ' is-open' : '')} aria-label="فهرس أقسام الخطة">
+            {count > 4 && <label className="or-find"><Icon type="search" /><input type="search" aria-label="بحث في فهرس الخطة" placeholder="بحث في الفهرس" value={query} onChange={event => setQuery(event.target.value)} /></label>}
+            <ol className="or-index-list">{sections.map(({ title, index }) => <li key={index}><button type="button" aria-current={index === safePageIndex ? 'page' : undefined} onClick={() => selectPage(index)}><span className="or-section-num" aria-hidden="true">{number(index + 1)}</span><span>{title}</span></button></li>)}</ol>
+            {sections.length === 0 && <p className="or-no-match" role="status">لا توجد أقسام مطابقة.</p>}
+          </nav>
+        </aside>
+        <article className="or-paper">
+          <div className="or-meta"><span>القسم {number(safePageIndex + 1)} من {number(count)}</span><span className="or-progress" aria-hidden="true"><span style={{ width: `${(safePageIndex + 1) / count * 100}%` }} /></span></div>
+          <h2 ref={sectionTitle} className="or-section-heading" tabIndex={-1}>{page.title}</h2>
+          <PlanBlocks page={page} />
+          <nav className="or-pager" aria-label="تصفح أقسام الخطة">
+            <button type="button" disabled={safePageIndex === 0} onClick={() => selectPage(safePageIndex - 1)} className="or-pager-button"><Icon type="previous" /><span><small>القسم السابق</small>{plan.pages[safePageIndex - 1]?.title}</span></button>
+            <button type="button" disabled={safePageIndex === count - 1} onClick={() => selectPage(safePageIndex + 1)} className="or-pager-button or-forward"><span><small>القسم التالي</small>{plan.pages[safePageIndex + 1]?.title}</span><Icon type="next" /></button>
+          </nav>
+        </article>
       </div>
-      <article className="or-paper">
-        <div className="or-meta"><span className="or-meta-rule" aria-hidden="true" /><span>القسم {number(safePageIndex + 1)} من {number(count)}</span></div>
-        <h2 ref={sectionTitle} className="or-section-heading" tabIndex={-1}>{page.title}</h2>
-        <PlanBlocks page={page} />
-        <nav className="or-pager" aria-label="تصفح أقسام الخطة">
-          <button type="button" disabled={safePageIndex === 0} onClick={() => selectPage(safePageIndex - 1)} className="or-pager-button"><Icon type="previous" /> القسم السابق</button>
-          <button type="button" disabled={safePageIndex === count - 1} onClick={() => selectPage(safePageIndex + 1)} className="or-pager-button">القسم التالي <Icon type="next" /></button>
-        </nav>
-      </article>
     </section>
   );
 }

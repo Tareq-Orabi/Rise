@@ -122,27 +122,6 @@
   .or-print-foot { border-block-start: .22mm solid #adbeb4; margin-block-start: auto; padding-block-start: 1.6mm; min-height: 6mm; display: flex; align-items: center; justify-content: space-between; gap: 5mm; color: #4c665d; font-size: 8.5pt; line-height: 1.45; }
 }
 
-/* Screen reading uses the same Octagram palette as the dashboard. */
-@media screen {
-  .octa-reader { --or-ink: #173c40; --or-teal: #155d62; --or-faint: #526b70; --or-line: #dce8e8; --or-paper: #fff; --or-coral: #c46a2b; }
-  .octa-reader .or-head { margin-bottom: 28px; }
-  .octa-reader .or-control { border-color: #ccdfdf; font-size: 14px; min-height: 46px; }
-  .octa-reader .or-index { background: #eaf5f2; border-radius: 14px; margin-bottom: 18px; }
-  .octa-reader .or-index-toggle { min-height: 58px; padding-inline: 20px; }
-  .octa-reader .or-index-list button[aria-current] { color: #155d62; background: #d6ebe7; }
-  .octa-reader .or-index-list button:hover { background: #deefeb; }
-  .octa-reader .or-paper { border-radius: 20px; box-shadow: 0 12px 40px -30px #1a66654a; }
-  .octa-reader .or-paper .or-body { font-size: 17px; }
-  .octa-reader .or-body .or-emphasis { background: #eff8f5; border-inline-start-color: #51a8a4; }
-  .octa-reader .or-table thead th { background: #155d62; }
-  .octa-reader .or-table tbody tr:nth-child(even) td { background: #f2f8f8; }
-  .octa-reader .or-control:hover, .octa-reader .or-pager-button:hover:not(:disabled) { background: #eaf5f2; }
-  .octa-reader .or-control.or-download:hover { background: #104d52; }
-  .octa-reader .or-index-count, .octa-reader .or-meta { font-size: 13px; }
-  .octa-reader .or-index-list button { font-size: 14px; }
-  .octa-reader .or-pager-button { font-size: 14px; }
-}
-
 .or-document-label { color: var(--or-teal); font-size: 13px; font-weight: 700; letter-spacing: .15px; margin-bottom: 8px; }
 .or-task { margin: 1.35em 0; border: 1px solid var(--or-line); border-radius: 14px; overflow: hidden; background: #fff; }
 .or-task-head { padding: 16px 22px; background: #edf6f4; border-bottom: 1px solid var(--or-line); }
@@ -159,26 +138,6 @@
 .or-task-dependencies h4 { color: var(--or-teal); }
 .or-task-dependencies ul { list-style: none; padding: 0; }
 .or-task-dependencies li { margin: 3px 0; }
-@media screen {
-  .octa-reader { max-width: 1160px; }
-  .octa-reader .or-head h1 { font-weight: 800; line-height: 1.65; }
-  .octa-reader .or-section-heading { font-weight: 800; margin-bottom: 25px; }
-  .octa-reader .or-paper .or-body { font-size: 18px; line-height: 1.95; }
-  .octa-reader .or-paper { padding: clamp(22px,4vw,52px); }
-  .octa-reader .or-body .or-emphasis { padding: 16px 20px; font-weight: 600; border-radius: 10px; }
-  .octa-reader .or-table { font-size: .92em; }
-  .octa-reader .or-table th, .octa-reader .or-table td { padding: .85em; }
-  .octa-reader .or-subtitles { font-size: 16px; }
-  .octa-reader .or-body > h3 { font-size: 1.2em; margin-top: 1.5em; }
-}
-@media screen and (max-width:600px) {
-  .octa-reader .or-paper { padding: 22px 16px; }
-  .octa-reader .or-paper .or-body { font-size: 17px; }
-  .or-task-head { padding: 15px 16px; }
-  .or-task-output { padding: 16px 16px 0; }
-  .or-task-acceptance { padding: 14px 16px 18px; }
-  .or-task-dependencies { padding: 14px 16px; }
-}
 @media print {
   .octa-print-document { --or-ink: #173c40; --or-teal: #155d62; --or-faint: #526b70; --or-line: #d7e7e5; --or-paper: #fff; --or-coral: #bc6529; }
   .or-print-sheet { background: #fff; padding: 11mm 14mm 9mm; }
@@ -210,3 +169,120 @@
 }
 .or-code { direction: ltr; text-align: left; unicode-bidi: isolate; white-space: pre; overflow-x: auto; padding: 20px; background: #f2f7f8; border: 1px solid var(--or-line); border-radius: 10px; font: 13px/1.8 ui-monospace, Menlo, Consolas, monospace; }
 @media print { .or-code { font-size: 8pt; line-height: 1.3; padding: 2mm; white-space: pre-wrap; overflow: visible; } }
+
+@media screen {
+  .octa-reader {
+    --or-ink: #163536;
+    --or-teal: #17635f;
+    --or-faint: #536b69;
+    --or-line: #d8e2de;
+    --or-paper: #fff;
+    --or-soft: #f2f7f4;
+    --or-tint: #e0f0eb;
+    --or-coral: #a95428;
+    max-width: 1260px;
+    container: reader / inline-size;
+    font-family: inherit;
+  }
+  html[data-theme="dark"] .octa-reader {
+    --or-ink: #e4eeeb;
+    --or-teal: #99d8cc;
+    --or-faint: #afc1bc;
+    --or-line: #354c48;
+    --or-paper: #1a2b2a;
+    --or-soft: #223734;
+    --or-tint: #2b4641;
+    --or-coral: #ffb27c;
+  }
+  .octa-reader .or-head {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: grid;
+    gap: 20px;
+    padding: clamp(22px, 3.6cqi, 43px);
+    margin: 0 0 clamp(16px, 2.1cqi, 27px);
+    border: 1px solid #336761;
+    border-radius: 19px;
+    background: linear-gradient(110deg, #23635c, #163f40 48%, #102d30);
+    color: #fff9ef;
+  }
+  .octa-reader .or-head::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    inset: 0;
+    background-image: repeating-radial-gradient(ellipse at 0% 110%, transparent 0 34px, #bad7bd36 35px, transparent 36px 49px);
+    mask-image: linear-gradient(90deg, #000, transparent 58%);
+  }
+  .octa-reader .or-document-label { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; color: #d3e8d9; font-size: .78rem; }
+  .octa-reader .or-document-label::before { content: ''; width: 22px; height: 2px; flex: none; background: #f3aa6f; }
+  .octa-reader .or-head h1 { color: #fffaf1; font-size: clamp(1.6rem, 3.5cqi, 2.8rem); line-height: 1.5; font-weight: 800; }
+  .octa-reader .or-head .or-subtitles { max-width: 72ch; color: #c3d9d4; font-size: .94rem; line-height: 1.85; margin-top: 6px; }
+  .octa-reader .or-head .or-actions .or-control { min-height: 42px; border: 1px solid #a9cbc470; background: #153d3cd9; color: #f2faf5; border-radius: 8px; padding-inline: 15px; font-size: .83rem; }
+  .octa-reader .or-head .or-actions .or-download { border-color: #e8f3df; background: #e8f3df; color: #163c36; }
+  .octa-reader .or-head .or-actions .or-control:hover { background: #30645b; color: white; }
+  .octa-reader .or-head .or-actions .or-download:hover { background: #fff8eb; color: #163c36; }
+  .octa-reader .or-control:focus-visible { outline-color: #ffbc83; }
+  .or-layout { display: grid; gap: 16px; align-items: start; }
+  .octa-reader .or-index { min-width: 0; margin: 0; border: 1px solid var(--or-line); border-radius: 14px; background: var(--or-paper); }
+  .octa-reader .or-index-toggle, .or-rail-head { gap: 7px; color: var(--or-ink); align-items: center; min-height: 54px; padding: 9px 15px; }
+  .or-rail-head { display: none; }
+  .octa-reader .or-index-label { font-size: .87rem; }
+  .octa-reader .or-index-label .or-icon { color: var(--or-teal); width: 17px; }
+  .octa-reader .or-index-count { font-size: .71rem; }
+  .or-index-content { display: none; padding: 0 8px 9px; }
+  .or-index-content.is-open { display: block; }
+  .or-find { display: flex; align-items: center; gap: 8px; padding: 0 10px; border: 1px solid var(--or-line); border-radius: 7px; margin: 0 5px 8px; color: var(--or-faint); background: var(--or-soft); }
+  .or-find:focus-within { outline: 2px solid var(--or-teal); outline-offset: 1px; }
+  .octa-reader .or-find input { min-width: 0; width: 100%; background: transparent; color: var(--or-ink); border: 0; outline: 0; padding-block: 7px; font: inherit; font-size: .81rem; }
+  .or-find input::placeholder { color: var(--or-faint); }
+  .octa-reader .or-find .or-icon { width: 15px; height: 15px; }
+  .octa-reader .or-index-list { display: grid; grid-template-columns: 1fr; gap: 2px; padding: 4px; border: 0; max-height: min(52vh, 30rem); scrollbar-width: thin; scrollbar-color: var(--or-line) transparent; }
+  .octa-reader .or-index-list button { align-items: baseline; color: var(--or-ink); border-radius: 7px; padding: 7px 9px; font-size: .85rem; }
+  .octa-reader .or-index-list button:hover { background: var(--or-soft); }
+  .octa-reader .or-index-list button[aria-current] { background: var(--or-tint); color: var(--or-teal); box-shadow: inset -3px 0 var(--or-teal); }
+  .octa-reader .or-section-num { flex: none; min-width: 1.45em; color: var(--or-faint); }
+  .or-no-match { padding: 8px; margin: 0; color: var(--or-faint); font-size: .84rem; }
+  .octa-reader .or-paper { margin: 0; border-radius: 16px; padding: clamp(20px, 3.8cqi, 52px); box-shadow: 0 10px 32px -27px #183c34a0; }
+  .octa-reader .or-meta { gap: 12px; color: var(--or-teal); font-size: .75rem; margin-bottom: 9px; }
+  .or-progress { display: flex; width: 65px; height: 3px; overflow: hidden; border-radius: 8px; background: var(--or-line); }
+  .or-progress > span { min-width: 2px; background: var(--or-coral); }
+  .octa-reader .or-section-heading { font-size: clamp(1.34rem, 2.65cqi, 2.15rem); line-height: 1.6; color: var(--or-ink); padding-bottom: .64em; border-bottom: 1px solid var(--or-line); margin: 0 0 1em; font-weight: 800; }
+  .octa-reader .or-paper .or-body { color: var(--or-ink); font-size: clamp(1rem, 1.52cqi, 1.1rem); line-height: 2; }
+  .octa-reader .or-body > h3 { font-size: 1.16em; margin-block-start: 1.5em; }
+  .octa-reader .or-body .or-emphasis { background: var(--or-soft); border-inline-start: 3px solid var(--or-coral); border-radius: 7px; padding: .68em 1em; }
+  .octa-reader .or-body > :first-child { margin-block-start: 0; }
+  .octa-reader .or-task { background: var(--or-paper); }
+  .octa-reader .or-task-head, .octa-reader .or-task-dependencies { background: var(--or-soft); }
+  .octa-reader .or-field-label, .octa-reader .or-task h4 { color: var(--or-coral); }
+  .octa-reader .or-table th, .octa-reader .or-table td { padding: .65em .8em; }
+  .octa-reader .or-table thead th { background: #215852; }
+  .octa-reader .or-table tbody tr:nth-child(even) td { background: var(--or-soft); }
+  .octa-reader .or-pager { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-items: stretch; margin-top: 29px; gap: 10px; }
+  .octa-reader .or-pager-button { min-width: 0; flex-wrap: nowrap; justify-content: flex-start; text-align: start; color: var(--or-teal); border: 1px solid var(--or-line); border-radius: 9px; padding: 8px 12px; font-size: .83rem; background: var(--or-paper); }
+  .octa-reader .or-pager-button span { min-width: 0; overflow-wrap: anywhere; }
+  .or-pager-button small { display: block; color: var(--or-faint); font-size: .72rem; font-weight: 600; }
+  .octa-reader .or-forward { justify-content: flex-end; text-align: end; }
+  .octa-reader .or-pager-button:hover:enabled { background: var(--or-soft); border-color: var(--or-teal); }
+  .octa-reader .or-pager-button:disabled { opacity: .55; background: transparent; border-style: dashed; }
+  @container reader (min-width: 870px) {
+    .or-layout { grid-template-columns: minmax(200px, 23%) minmax(0, 1fr); gap: clamp(17px, 2.2cqi, 28px); }
+    .octa-reader .or-index { position: sticky; top: 20px; }
+    .octa-reader .or-index-toggle { display: none; }
+    .or-rail-head { display: flex; }
+    .or-index-content { display: block; }
+    .octa-reader .or-index-list { max-height: min(56vh, 40rem); }
+  }
+  @container reader (max-width: 520px) {
+    .octa-reader .or-head { border-radius: 14px; }
+    .octa-reader .or-paper { border-radius: 13px; padding: 18px 15px; }
+    .octa-reader .or-pager { gap: 7px; }
+    .octa-reader .or-pager-button { padding: 8px; font-size: .78rem; gap: 5px; }
+    .octa-reader .or-task-head, .octa-reader .or-task-output, .octa-reader .or-task-acceptance, .octa-reader .or-task-dependencies { padding-inline: 14px; }
+    .octa-reader .or-paper .or-table { table-layout: auto; font-size: .88em; }
+    .octa-reader .or-paper .or-table:has(th:nth-child(3)) { min-width: 430px; }
+    .octa-reader .or-paper .or-table:has(th:nth-child(4)) { min-width: 545px; }
+  }
+}

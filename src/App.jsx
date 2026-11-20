@@ -1,25 +1,155 @@
-import React,{useState,useEffect} from 'react';
-import {plans} from './data.js';
-import {Company} from './Company.jsx';
-import {logoUrl} from './assets.js';
-import {Icon} from './icons.jsx';
-import {PlanReader,PrintDocument} from './Reader.jsx';
-import {people,projectNames,tasks,phases,sections,normalize,link} from './management.js';
+import React, { useEffect, useRef, useState } from 'react';
 import './fonts.css';
 import './app.css';
-const nav=[['home','نظرة عامة','board'],['company','الخدمات','board'],['projects','المشاريع','layers'],['tasks','المهام والمسؤوليات','check'],['timeline','الجدول التنفيذي','calendar'],['team','الفريق والمسؤوليات','screen'],['documents','مكتبة الوثائق','book']];
-const labels=Object.fromEntries(nav.map(n=>[n[0],n[1]]));
-function route(){const parts=window.location.hash.split('?')[0].replace(/^#\/?/,'').split('/');if(parts[0]==='plan'){const plan=plans.find(p=>p.id===parts[1]);if(plan)return {kind:'plan',plan,index:Math.max(0,Math.min(plan.pages.length-1,(Number(parts[2])||1)-1))};}return {kind:labels[parts[0]]?parts[0]:'home',section:parts[1]};}
-function Tag({children,tone=''}){return <span className={`tag ${tone}`}>{children}</span>}
-function SectionHead({title,sub,action}){return <div className="section-head"><div><h2>{title}</h2>{sub&&<p>{sub}</p>}</div>{action}</div>}
-function ProjectCard({id}){const care=id==='octacare';return <article className={`project-card ${care?'care':'club'}`}><div className="project-top"><span className="project-symbol"><Icon name={care?'layers':'book'} size={26}/></span><Tag tone={care?'orange':''}>{care?'مقترح للاعتماد':'برنامج مخطط'}</Tag></div><h3 dir="ltr">{projectNames[id]}</h3><p>{care?'اختيار عملية تشغيلية واحدة للمؤسسات الطبية في عمّان، ثم تطويرها وتجربتها مع شركاء فعليين.':'إعادة هندسة MedClub لإطلاق منصة تعلم متكاملة تضم THINK وTech Path وCode Runner.'}</p><div className="project-meta"><span>الفترة<strong>{care?'أبريل – ديسمبر 2027':'ديسمبر 2026 – فبراير 2027'}</strong></span><span>قيادة المشروع<strong>طارق عرابي</strong></span></div><div className="project-next"><span>بوابة القرار</span><strong>{care?'قرار التطوير · 30 يونيو':'قبول الإصدار · 28 فبراير'}</strong></div><div className="card-actions"><a className="button primary" href={link(id)}>وثيقة المشروع</a><a className="button" href={`#/tasks?project=${id}`}>مهام المشروع</a></div></article>}
-function Timeline({project='all',compact=false}){const rows=phases.filter(p=>project==='all'||p.project===project);return <div className={`timeline ${compact?'compact':''}`}>{rows.map(p=><article key={p.date+p.project} className={p.project==='octacare'?'care':''}><div className="timeline-date">{p.date}<span>{projectNames[p.project]}</span></div><div><h3>{p.title}</h3><p>{p.detail}</p><span className="gate">{p.gate}</span></div></article>)}</div>}
-function Overview(){return <><div className="welcome"><div><span className="eyebrow">خطة النهوض 2027</span><h1>لوحة الخطة التشغيلية</h1><p>أولويات الشركة، مراحل المشاريع، ومسؤوليات الفريق.</p></div><a className="button primary" href="#/tasks">فتح لوحة المهام</a></div><div className="stats"><div><span>المشاريع</span><strong>2</strong><small>OctaClub + THINK وOctaCare</small></div><div><span>المهام المخططة</span><strong>{tasks.length}</strong><small>موزعة على 4 أعضاء</small></div><div><span>أعضاء الفريق</span><strong>4</strong><small>أدوار ومخرجات واضحة</small></div><div><span>الوثائق المرجعية</span><strong>{plans.length}</strong><small>قراءة مباشرة وتحميل PDF</small></div></div><div className="company-shortcut"><div><strong>الخدمات</strong><p>خدمات تطوير البرمجيات والتصميم والتحليلات والأتمتة.</p></div><a className="button" href="#/company/services">عرض الخدمات</a></div><SectionHead title="محفظة المشاريع" sub="مواعيد مستهدفة ومسارات اعتماد واضحة" action={<a href="#/projects">عرض التفاصيل</a>}/><div className="project-grid"><ProjectCard id="octaclub"/><ProjectCard id="octacare"/></div><div className="overview-bottom"><section className="panel"><SectionHead title="قرارات المرحلة"/><div className="decision"><Tag>OctaClub + THINK</Tag><h3>إطلاق V1 في 28 فبراير 2027</h3><p>اكتمال P0، وقبول الرحلة المتكاملة، وتوثيق الاختبارات والتشغيل. مارس للاستقرار وتجهيز التجربة.</p><a href={link('octaclub',32)}>معايير قبول الإصدار</a></div><div className="decision"><Tag tone="orange">OctaCare</Tag><h3>اختيار المنتج بنهاية يونيو</h3><p>مشكلة متكررة، مشتري ومستخدم محددان، اتفاقات تجربة، وقدرة تنفيذية متاحة.</p><a href={link('octacare',4)}>خطة التحقق وشروط البدء</a></div></section><section className="panel"><SectionHead title="الأهداف التجارية" sub="مستهدفات الخطة وليست نتائج محققة"/><div className="target-row"><span>عملاء خدمات الشركة المدفوعون</span><b>5</b></div><div className="quarter-targets">{['Q1 · 1','Q2 · 2','Q3 · 4','Q4 · 5'].map(v=><span key={v} dir="ltr">{v}</span>)}</div><div className="target-row"><span>شراكات فعالة خلال السنة</span><b>2</b></div><div className="target-row"><span>اشتراكات OctaCare المستهدفة</span><b>3–5</b></div><p className="muted">هدف OctaCare مشروط باعتماد التطوير والتجربة. تُقاس الاشتراكات بصورة منفصلة عن عملاء الخدمات.</p><a className="button" href={link('master')}>قراءة خطة الشركة</a></section></div></>}
-function Projects(){return <><SectionHead title="المشاريع" sub="برنامج تعليمي ومسار صحي؛ لكل مشروع نطاق وقرار مستقل."/><div className="project-grid"><ProjectCard id="octaclub"/><ProjectCard id="octacare"/></div><section className="panel"><SectionHead title="نطاق المنتج الأول لـ OctaCare" sub="يُختار مسار واحد بنهاية يونيو؛ Marketplace والتوسعات المتخصصة ضمن الرؤية المستقبلية."/><div className="scope-grid"><div><Tag>OctaClinic</Tag><h3>إدارة العيادة</h3><p>الجداول، الحجز، الحضور والجلسات المتكررة عند اختيار هذه الشريحة.</p><strong>قبول أساسي: منع الحجز المزدوج.</strong></div><div><Tag tone="orange">OctaOperations</Tag><h3>تنسيق الإجراءات</h3><p>طلب إداري، جهة مسؤولة، مواعيد مقترحة، اختيار وتأكيد نهائي.</p><strong>قبول أساسي: حالة ومسؤول واضحان لكل طلب.</strong></div></div></section><div className="notice">ملكية كود MedClub محسومة لصالح Octagram؛ الفحص المطلوب ضمن OctaClub + THINK فني.</div></>}
-function TasksView({initialProject}){const [project,setProject]=useState(initialProject||'all'),[person,setPerson]=useState('all'),[period,setPeriod]=useState('all'),[query,setQuery]=useState('');const rows=tasks.filter(t=>(project==='all'||project===t.project)&&(person==='all'||person===t.person)&&(period==='all'||period===t.section)&&normalize(t.title+' '+t.deliverable).includes(normalize(query)));return <><SectionHead title="المهام والمسؤوليات" sub="عرض تسليمات الخطة ومعايير قبولها، مرتبة حسب المشروع والمسؤول والفترة."/><div className="filters"><input aria-label="البحث في المهام" placeholder="ابحث عن مهمة أو مخرج…" value={query} onChange={e=>setQuery(e.target.value)}/><select aria-label="تصفية المشروع" value={project} onChange={e=>setProject(e.target.value)}><option value="all">كل المشاريع</option>{Object.entries(projectNames).map(([v,l])=><option key={v} value={v}>{l}</option>)}</select><select aria-label="تصفية المسؤول" value={person} onChange={e=>setPerson(e.target.value)}><option value="all">كل المسؤولين</option>{people.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</select><select aria-label="تصفية الفترة" value={period} onChange={e=>setPeriod(e.target.value)}><option value="all">كل الفترات</option>{[...new Set(tasks.map(t=>t.section))].map(v=><option key={v}>{v}</option>)}</select></div><div className="results-count" aria-live="polite">{rows.length} مهمة <span>مخرجات مخططة وفق وثائق المشروع والفريق</span></div><div className="task-list">{rows.map(t=><article key={t.id} className="task-item"><div className="task-summary"><div><div className="task-meta"><Tag tone={t.project==='octacare'?'orange':''}>{projectNames[t.project]}</Tag><span>{t.owner}</span><span>{t.deadline||t.section}</span></div><h3>{t.title}</h3><p>{t.deliverable}</p></div></div><details><summary>معايير القبول والاعتماديات</summary><ul>{t.acceptance.map((a,i)=><li key={i}>{a}</li>)}</ul>{t.dependencies?.length>0&&<p className="muted">الاعتماديات: {t.dependencies.join('؛ ')}</p>}<a href={link(t.person,t.page)}>فتح القسم في خطة المسؤول</a></details></article>)}{!rows.length&&<div className="empty">لا توجد مهام تطابق المرشحات المحددة.</div>}</div></>}
-function Team(){return <><SectionHead title="الفريق والمسؤوليات" sub="المتابعة حسب صاحب المسؤولية، مع الرجوع إلى خطته الكاملة."/><div className="team-grid">{people.map((p,i)=>{const own=tasks.filter(t=>t.person===p.id);return <article className="panel person" key={p.id}><span className={'avatar color-'+i}>{p.name.split(' ').map(x=>x[0]).slice(0,2).join('')}</span><h2>{p.name}</h2><p>{p.role}</p><div className="target-row"><span>المهام المسندة</span><b>{own.length}</b></div><div className="target-row"><span>أقسام الخطة</span><b>{p.pages.length}</b></div><a className="button" href={link(p.id)}>الخطة والمسؤوليات</a></article>})}</div></>}
-function Documents(){return <><SectionHead title="مكتبة الوثائق" sub="الخطة العامة، وثائق المشاريع والفريق، ودليل الخدمات."/><div className="documents-list">{plans.map(p=><article key={p.id}><div className="document-icon"><Icon name="document" size={24}/></div><div><h2>{p.name}</h2><p>{p.title}</p><small>{p.pages.length} قسمًا · {p.pdfSource==='original'?'النسخة الإنجليزية الأصلية · 8 صفحات':'نسخة PDF مضمّنة'}</small></div><div className="card-actions"><a className="button" href={p.id==='commercial'?'#/company/services':link(p.id)}>قراءة</a><a className="button" download={`Octagram-2027-${p.id}.pdf`} href={p.pdfUrl}>{p.pdfLabel || 'تحميل PDF'}</a></div></article>)}</div></>}
-function SearchResults({query,onSelect}){const q=normalize(query.trim()),rows=q?sections.filter(s=>normalize(s.title+' '+s.name).includes(q)||s.text.includes(q)):[];return <section className="search-results" aria-label="نتائج البحث"><SectionHead title="نتائج البحث" sub={`${rows.length} قسمًا يطابق «${query}»`}/>{rows.slice(0,50).map(s=><a onClick={onSelect} href={s.href||link(s.plan,s.index)} key={s.plan+s.index}><span>{s.name} · القسم {s.index+1}</span><strong>{s.title}</strong></a>)}{rows.length===0&&<p className="empty">لا توجد نتائج. جرّب اسم مشروع أو مهمة أو مسؤول.</p>}{rows.length>50&&<p>تُعرض أول 50 نتيجة؛ يمكن تضييق البحث.</p>}</section>}
-export default function App(){const [current,setCurrent]=useState(route),[mobile,setMobile]=useState(false),[query,setQuery]=useState(''),[theme,setTheme]=useState(()=>document.documentElement.dataset.theme==='dark'?'dark':'light');useEffect(()=>{const change=()=>{setCurrent(route());setMobile(false);setQuery('');window.scrollTo(0,0)};window.addEventListener('hashchange',change);return()=>window.removeEventListener('hashchange',change)},[]);useEffect(()=>{document.title=(current.plan?.name||labels[current.kind])+' | Octagram — الإدارة الداخلية'},[current]);useEffect(()=>{if(!mobile)return;const close=e=>{if(e.key==='Escape')setMobile(false)};window.addEventListener('keydown',close);return()=>window.removeEventListener('keydown',close)},[mobile]);
-const toggleTheme=()=>{const next=theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;setTheme(next);try{localStorage.setItem('octagram-theme',next)}catch{}};const kind=current.kind;const initialProject=new URLSearchParams(window.location.hash.split('?')[1]||'').get('project');const activeKind=kind==='plan'?(people.some(p=>p.id===current.plan.id)?'team':['octaclub','octacare'].includes(current.plan.id)?'projects':'documents'):kind;
-return <><div className="admin-app" dir="rtl"><a className="skip" href="#main" onClick={e=>{e.preventDefault();document.getElementById('main').focus()}}>انتقل للمحتوى</a>{mobile&&<button className="mobile-scrim" aria-label="إغلاق القائمة" onClick={()=>setMobile(false)}/>}<aside className={'sidebar '+(mobile?'open':'')}><a className="brand" href="#/"><img src={logoUrl} alt="شعار Octagram"/><div><strong dir="ltr">Octagram</strong><span>مساحة الإدارة الداخلية</span></div></a><div className="workspace-name">خطة النهوض <b>2027</b></div><nav aria-label="التنقل الرئيسي">{nav.map(([id,title,icon])=><a key={id} href={id==='home'?'#/':`#/${id}`} aria-current={activeKind===id?'page':undefined}><Icon name={icon}/><span>{title}</span>{id==='projects'&&<small>2</small>}{id==='tasks'&&<small>{tasks.length}</small>}</a>)}</nav><div className="sidebar-projects"><span>وثائق المشاريع</span><a href={link('octaclub')}>OctaClub + THINK <span className="project-dot"/></a><a href={link('octacare')}>OctaCare <span className="project-dot orange"/></a></div><div className="sidebar-foot"><span className="small-logo">O</span><div><strong>Octagram Team</strong><span>مرجع الفريق · 2027</span></div></div></aside><div className="workspace"><header className="topbar"><button className="mobile-toggle" aria-label="فتح القائمة" aria-expanded={mobile} onClick={()=>setMobile(!mobile)}><Icon name="menu"/></button><span className="breadcrumb">مساحة العمل <span>/</span> <strong>{current.plan?.name||labels[kind]}</strong></span><div className="global-search"><Icon name="document" size={18}/><input aria-label="بحث شامل" placeholder="بحث في المشاريع والوثائق…" value={query} onChange={e=>setQuery(e.target.value)}/>{query&&<button aria-label="مسح البحث" onClick={()=>setQuery('')}><Icon name="close" size={17}/></button>}</div><button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={theme==='dark'?'تفعيل الوضع الفاتح':'تفعيل الوضع الداكن'} title={theme==='dark'?'الوضع الفاتح':'الوضع الداكن'}><Icon name={theme==='dark'?'sun':'moon'} size={19}/><span>{theme==='dark'?'فاتح':'داكن'}</span></button><span className="year-chip">2027</span></header><main id="main" tabIndex={-1}>{query.trim()?<SearchResults query={query} onSelect={()=>setQuery('')}/>:kind==='plan'?<><div className="reader-back"><a href="#/documents">مكتبة الوثائق</a><span> / {current.plan.name}</span></div><PlanReader plan={current.plan} pageIndex={current.index} onSelectPage={i=>{window.location.hash=link(current.plan.id,i)}} onPrint={()=>window.print()}/></>:kind==='company'?<Company section={current.section}/>:kind==='tasks'?<TasksView key={initialProject||'all'} initialProject={Object.hasOwn(projectNames,initialProject)?initialProject:'all'}/>:kind==='projects'?<Projects/>:kind==='timeline'?<><SectionHead title="الجدول التنفيذي" sub="مراحل مخططة من ديسمبر 2026 إلى ديسمبر 2027؛ تطوير OctaCare مشروط بقرار يونيو."/><div className="panel"><Timeline/></div></>:kind==='team'?<Team/>:kind==='documents'?<Documents/>:<Overview/>}</main><footer className="workspace-footer"><div><strong>Octagram · مرجع الفريق الداخلي</strong><span>خطة النهوض 2027 · المشاريع والمسؤوليات والوثائق · نسخة للمطالعة</span></div><a href="#/documents">مكتبة الوثائق</a></footer></div></div><div className="oa-print-only"><PrintDocument plan={current.plan||plans[0]}/></div></>}
+import { plans } from './data.js';
+import { logoUrl } from './assets.js';
+import { Icon } from './icons.jsx';
+import { PlanReader, PrintDocument } from './Reader.jsx';
+import { Company } from './Company.jsx';
+import { Documents, TasksView, Team } from './WorkViews.jsx';
+import { Projects, Schedule } from './ProjectViews.jsx';
+import { Overview } from './Overview.jsx';
+import { people, projectNames, sections, normalize, link } from './management.js';
+import './shell.css';
+
+const navigation = [
+  { id: 'home', title: 'نظرة عامة', icon: 'grid' },
+  { id: 'projects', title: 'المشاريع', icon: 'layers' },
+  { id: 'timeline', title: 'الجدول التنفيذي', icon: 'calendar' },
+  { id: 'tasks', title: 'المهام والمسؤوليات', icon: 'checklist' },
+  { id: 'team', title: 'الفريق', icon: 'users' },
+  { id: 'documents', title: 'مكتبة الوثائق', icon: 'book' },
+  { id: 'company', title: 'الخدمات', icon: 'case' },
+];
+const labels = Object.fromEntries(navigation.map(item => [item.id, item.title]));
+const navHref = id => id === 'home' ? '#/' : id === 'company' ? '#/company/services' : '#/' + id;
+
+function readLocation() {
+  const [path, search] = window.location.hash.replace(/^#\/?/, '').split('?');
+  const [kind, section, number] = path.split('/');
+  if (kind === 'plan') {
+    const plan = plans.find(item => item.id === section);
+    if (plan) {
+      const page = Number(number);
+      const index = Number.isSafeInteger(page) ? Math.min(Math.max(page - 1, 0), plan.pages.length - 1) : 0;
+      return { kind, plan, index };
+    }
+  }
+  const query = new URLSearchParams(search);
+  return { kind: Object.hasOwn(labels, kind) ? kind : 'home', section, project: query.get('project'), person: query.get('person'), search };
+}
+
+function Navigation({ active, onNavigate }) {
+  return <>
+    <a className="desk-brand" href="#/" onClick={onNavigate} aria-label="Octagram، نظرة عامة">
+      <img src={logoUrl} alt=""/><span><b lang="en" dir="ltr">Octagram</b><small>مساحة الفريق</small></span>
+    </a>
+    <nav className="desk-nav" aria-label="التنقّل الرئيسي">
+      {navigation.map(({id, title, icon}) => <a key={id} href={navHref(id)} onClick={onNavigate} aria-current={active === id ? 'page' : undefined}>
+        <Icon name={icon} size={19}/><span>{title}</span>{active === id && <i aria-hidden="true"/>}
+      </a>)}
+    </nav>
+    <div className="desk-shortcuts">
+      <p>وثائق المشاريع</p>
+      {['octaclub', 'octacare'].map(id => <a key={id} href={link(id)} onClick={onNavigate}><i className={id} aria-hidden="true"/><bdi>{projectNames[id]}</bdi><Icon name="outward" size={14}/></a>)}
+    </div>
+    <div className="desk-side-foot"><span>الخطة السنوية</span><b>2027</b></div>
+  </>;
+}
+
+function SearchDialog({dialogRef}) {
+  const [query, setQuery] = useState('');
+  const q = normalize(query.trim());
+  const pageLinks = navigation.filter(n => normalize(n.title).includes(q));
+  const results = q ? sections.map(s => ({ ...s, rank: normalize(s.title + ' ' + s.name).includes(q) ? 2 : s.text.includes(q) ? 1 : 0 }))
+    .filter(s => s.rank).sort((a,b) => b.rank - a.rank) : [];
+  const shortcuts = q ? pageLinks : navigation.filter(n => ['projects','tasks','timeline','documents'].includes(n.id));
+  const close = () => dialogRef.current.close();
+  return <dialog className="desk-search" ref={dialogRef} aria-label="البحث في مساحة الفريق" onClose={() => setQuery('')} onClick={event => { if (event.target === event.currentTarget) close(); }}>
+    <div className="desk-search-inner">
+      <div className="desk-search-field"><Icon name="search"/><input autoFocus type="search" aria-label="بحث شامل" placeholder="ابحث عن مشروع أو مهمة أو وثيقة…" value={query} onChange={e => setQuery(e.target.value)}/><button className="desk-icon" aria-label="إغلاق البحث" onClick={close}><Icon name="close" size={18}/></button></div>
+      <div className="desk-hits">
+        <h2>{q ? 'نتائج البحث' : 'انتقال سريع'}</h2>
+        {shortcuts.map(n => <a key={n.id} onClick={close} href={navHref(n.id)}><Icon name={n.icon} size={18}/><strong>{n.title}</strong><Icon name="arrow" size={17}/></a>)}
+        {results.slice(0,50).map(s => <a key={s.plan + s.index} href={s.href || link(s.plan,s.index)} onClick={close}><Icon name="document" size={18}/><span><small>{s.name} · القسم {s.index+1}</small><strong>{s.title}</strong></span><Icon name="arrow" size={17}/></a>)}
+        {q && <p role="status">{results.length + shortcuts.length === 0 ? 'لم نعثر على نتيجة. جرّب اسم المشروع أو المسؤول.' : results.length > 50 ? 'تُعرض أول 50 نتيجة من الوثائق. استخدم كلمة أدق لتضييق البحث.' : (results.length + shortcuts.length) + ' نتيجة'}</p>}
+      </div>
+    </div>
+  </dialog>;
+}
+
+function Screen({current}) {
+  switch (current.kind) {
+    case 'plan': return <PlanReader plan={current.plan} pageIndex={current.index} onSelectPage={i => { window.location.hash = link(current.plan.id,i); }} onPrint={() => window.print()}/>;
+    case 'projects': return <Projects/>;
+    case 'timeline': return <Schedule search={current.search}/>;
+    case 'tasks': return <TasksView key={current.search} initialProject={Object.hasOwn(projectNames,current.project) ? current.project : 'all'} initialPerson={people.some(p => p.id === current.person) ? current.person : 'all'}/>;
+    case 'team': return <Team/>;
+    case 'documents': return <Documents/>;
+    case 'company': return <Company section={current.section}/>;
+    default: return <Overview/>;
+  }
+}
+
+export default function App() {
+  const [current, setCurrent] = useState(readLocation);
+  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme);
+  const search = useRef(null), menu = useRef(null), main = useRef(null);
+  const active = current.kind === 'plan' ? people.some(p => p.id === current.plan.id) ? 'team' : ['octaclub','octacare'].includes(current.plan.id) ? 'projects' : 'documents' : current.kind;
+  const title = current.plan?.name || labels[active];
+  useEffect(() => {
+    function navigate(event) {
+      setCurrent(readLocation());
+      search.current?.close();
+      menu.current?.close();
+      const routePath = url => new URL(url).hash.split('?')[0];
+      if (routePath(event.oldURL) !== routePath(event.newURL)) {
+        window.scrollTo(0,0);
+        main.current?.focus({preventScroll:true});
+      }
+    }
+    function shortcuts(event) {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        menu.current?.close();
+        if (search.current?.open) search.current.close();
+        else search.current?.showModal();
+      }
+    }
+    const wide = window.matchMedia('(min-width: 941px)');
+    const closeWideMenu = () => { if (wide.matches) menu.current?.close(); };
+    wide.addEventListener('change', closeWideMenu);
+    window.addEventListener('hashchange', navigate);
+    window.addEventListener('keydown', shortcuts);
+    return () => { window.removeEventListener('hashchange', navigate); window.removeEventListener('keydown', shortcuts); wide.removeEventListener('change', closeWideMenu); };
+  }, []);
+  useEffect(() => { document.title = title + ' | Octagram — خطة النهوض 2027'; }, [title]);
+  function toggleTheme() {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    setTheme(next);
+    try { localStorage.setItem('octagram-theme',next); } catch {}
+  }
+  const themeLabel = theme === 'dark' ? 'تفعيل الوضع الفاتح' : 'تفعيل الوضع الداكن';
+  return <>
+    <div className="admin-app desk-app" dir="rtl">
+      <a className="skip" href="#main" onClick={e => { e.preventDefault(); main.current.focus(); }}>انتقل إلى المحتوى</a>
+      <aside className="desk-aside"><Navigation active={active}/></aside>
+      <dialog className="desk-drawer" aria-label="قائمة التنقّل" ref={menu} onClick={e => { if(e.target === e.currentTarget) menu.current.close(); }}>
+        <div><button className="desk-drawer-close" aria-label="إغلاق القائمة" onClick={() => menu.current.close()}><Icon name="close" size={20}/></button><Navigation active={active} onNavigate={() => menu.current.close()}/></div>
+      </dialog>
+      <div className="desk-workspace">
+        <header className="desk-header"><div className="desk-header-inner">
+          <button className="desk-icon desk-menu" aria-label="فتح القائمة" aria-haspopup="dialog" onClick={() => menu.current.showModal()}><Icon name="menu"/></button>
+          <div className="desk-crumb"><a href="#/">مساحة الفريق</a><Icon name="chevron" size={13}/><strong>{title}</strong></div>
+          <div className="desk-tools"><button className="desk-find" aria-haspopup="dialog" aria-label="البحث في مساحة الفريق" onClick={() => search.current.showModal()}><Icon name="search" size={17}/><span>بحث في الخطة</span><kbd dir="ltr">⌘ / Ctrl K</kbd></button>
+          <button className="desk-icon" title={themeLabel} aria-label={themeLabel} onClick={toggleTheme}><Icon name={theme === 'dark' ? 'sun' : 'moon'} size={19}/></button></div>
+        </div></header>
+        <main className="desk-main" id="main" tabIndex={-1} ref={main}><Screen current={current}/></main>
+        <footer className="desk-footer"><span>Octagram · خطة النهوض 2027</span><a href="#/documents">مكتبة الوثائق <Icon name="arrow" size={14}/></a></footer>
+      </div>
+      <SearchDialog dialogRef={search}/>
+    </div>
+    <div className="oa-print-only"><PrintDocument plan={current.plan || plans[0]}/></div>
+  </>;
+}
